@@ -1,0 +1,20 @@
+{
+  "name": "Kungfu Express - AI Smart Delivery",
+  "short_name": "Kungfu Express",
+  "description": "AI-powered smart delivery platform. Smart routing, real-time tracking, and predictive analytics.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0f",
+  "theme_color": "#e63946",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
