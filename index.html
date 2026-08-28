@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
 <link rel="apple-touch-icon" sizes="512x512" href="./icons/icon-512.png">
-<title>Kungfu Express – AI Smart Delivery Platform</title>
+<title>Kungfu Express – AI Smart Delivery App</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -25,1380 +25,995 @@
 --text:#f0f0f0;--text2:#8888aa;--text3:#555570;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-a{text-decoration:none;color:inherit}
-
-/* ─── NAVIGATION ─── */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.topbar .logo{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-0.5px}
-.topbar .logo span{color:var(--accent)}
-.topbar nav{display:flex;gap:6px}
-.topbar nav a{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text2);transition:.2s}
-.topbar nav a:hover,.topbar nav a.active{color:var(--text);background:var(--card)}
-.topbar .demo-btn{padding:8px 20px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-weight:700;font-size:13px;border:none;cursor:pointer;transition:.2s}
-.topbar .demo-btn:hover{transform:scale(1.04);box-shadow:0 0 24px var(--primary-glow)}
-.topbar .mobile-menu{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer}
-
-/* ─── HERO ─── */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--primary-glow),transparent 70%);top:-100px;right:-100px;animation:pulse 6s ease-in-out infinite}
-.hero::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,#ff6b3530,transparent 70%);bottom:-50px;left:-50px;animation:pulse 8s ease-in-out infinite reverse}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:40px;background:var(--card);border:1px solid var(--border);font-size:13px;color:var(--text2);margin-bottom:28px;animation:fadeUp .6s ease}
-.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+.hidden{display:none!important}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.hero h1{font-size:clamp(40px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:20px;animation:fadeUp .8s ease}
-.hero h1 .red{color:var(--primary)}
-.hero h1 .orange{color:var(--accent)}
-.hero p{font-size:clamp(16px,2vw,22px);color:var(--text2);max-width:680px;line-height:1.6;margin-bottom:36px;animation:fadeUp 1s ease}
-.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeUp 1.2s ease}
-.btn-primary{padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:.25s}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--primary-glow)}
-.btn-outline{padding:14px 32px;border-radius:12px;background:transparent;color:var(--text);font-weight:700;font-size:15px;border:2px solid var(--border);cursor:pointer;transition:.25s}
-.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
-.hero-stats{display:flex;gap:48px;margin-top:60px;animation:fadeUp 1.4s ease}
-.hero-stats .stat{text-align:center}
-.hero-stats .stat .num{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-stats .stat .lbl{font-size:13px;color:var(--text3);margin-top:4px}
-
-/* ─── SECTIONS ─── */
-.section{padding:100px 24px;max-width:1200px;margin:0 auto;position:relative}
-.section-label{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;background:var(--primary-glow);color:var(--primary);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
-.section-title{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-1px;margin-bottom:12px}
-.section-desc{font-size:16px;color:var(--text2);max-width:600px;line-height:1.7;margin-bottom:48px}
-
-/* ─── CARDS GRID ─── */
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:.3s;position:relative;overflow:hidden}
-.feature-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 12px 40px rgba(230,57,70,.12)}
-.feature-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
-.feature-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
-.feature-card p{font-size:14px;color:var(--text2);line-height:1.6}
-.icon-red{background:rgba(230,57,70,.15);color:var(--primary)}
-.icon-orange{background:rgba(255,107,53,.15);color:var(--accent)}
-.icon-green{background:rgba(0,200,83,.15);color:var(--green)}
-.icon-blue{background:rgba(33,150,243,.15);color:var(--blue)}
-.icon-purple{background:rgba(156,39,176,.15);color:var(--purple)}
-.icon-cyan{background:rgba(0,188,212,.15);color:var(--cyan)}
-.icon-gold{background:rgba(255,215,0,.15);color:var(--gold)}
-
-/* ─── PHONE MOCKUP ─── */
-.phone-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.phone-section.reverse{direction:rtl}
-.phone-section.reverse>*{direction:ltr}
-.phone-mockup{width:300px;height:620px;background:var(--surface);border:3px solid var(--border);border-radius:40px;padding:12px;position:relative;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.phone-notch{width:120px;height:28px;background:var(--bg);border-radius:0 0 16px 16px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2}
-.phone-screen{width:100%;height:100%;background:var(--bg);border-radius:30px;overflow:hidden;position:relative}
-.phone-status-bar{display:flex;justify-content:space-between;align-items:center;padding:8px 20px 0;font-size:11px;color:var(--text2);height:36px}
-.phone-content{padding:12px 16px;overflow-y:auto;height:calc(100% - 36px)}
-.phone-nav{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:10px 0 16px;background:var(--surface);border-top:1px solid var(--border);font-size:10px;color:var(--text3)}
-.phone-nav span{text-align:center}
-.phone-nav span.active{color:var(--primary)}
-
+@keyframes scanBars{0%{width:5%}50%{width:100%}100%{width:5%}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(230,57,70,.4)}50%{box-shadow:0 0 0 10px transparent}}
+.anim{animation:fadeUp .45s ease both}
+.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-weight:800;font-size:15px;border:none;transition:.2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--primary-glow)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{width:100%;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--border);color:var(--text);font-weight:700;font-size:14px}
+.btn-ghost:hover{border-color:var(--primary)}
+.btn-green{width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,var(--green),var(--cyan));border:none;color:#fff;font-weight:800;font-size:15px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+.section-label{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;color:var(--primary);background:var(--primary-glow)}
+.h2{font-size:22px;font-weight:900;margin-bottom:4px}
+.h3{font-size:16px;font-weight:800;margin-bottom:8px}
+.sub{font-size:12px;color:var(--text2);margin-bottom:18px}
+label.field{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:6px}
+.input{width:100%;padding:13px 14px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);color:var(--text);font-size:14px;outline:none;transition:.2s}
+.input:focus{border-color:var(--primary)}
+textarea.input{resize:none}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600}
+/* ─── APP SHELL ─── */
+.app{max-width:520px;margin:0 auto;min-height:100vh;position:relative;display:flex;flex-direction:column}
+.app-top{position:sticky;top:0;z-index:900;background:rgba(10,10,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.app-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.logo{font-size:18px;font-weight:900;letter-spacing:-.5px}
+.logo b{color:var(--primary)}
+.logo span{color:var(--accent)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s}
+.icon-btn:hover{border-color:var(--primary)}
+/* role switcher */
+.role-switch{display:flex;gap:4px;margin:0 16px 12px;background:var(--card);border-radius:12px;padding:4px;border:1px solid var(--border)}
+.role-btn{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:var(--text3);font-weight:700;font-size:12px;transition:.2s}
+.role-btn.active{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff}
+.app-content{flex:1;padding:16px;padding-bottom:100px}
+/* bottom nav */
+.app-nav{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;background:rgba(18,18,26,.96);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;z-index:1000;padding-bottom:env(safe-area-inset-bottom)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;color:var(--text3);font-size:9px;font-weight:600;cursor:pointer;transition:.2s;border:none;background:none}
+.nav-item .ni-icon{font-size:18px}
+.nav-item.active{color:var(--primary)}
 /* ─── ORDER SCREEN ─── */
-.order-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.order-header h4{font-size:16px;font-weight:700}
-.order-type-tabs{display:flex;gap:6px;margin-bottom:16px}
-.order-type-tab{flex:1;padding:8px;border-radius:10px;background:var(--card);border:1px solid var(--border);text-align:center;font-size:11px;font-weight:600;cursor:pointer;transition:.2s}
-.order-type-tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
-.input-group{margin-bottom:14px}
-.input-group label{display:block;font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.input-field{width:100%;padding:12px 14px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:13px;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary)}
-.input-icon-row{display:flex;gap:8px;align-items:center}
-.input-icon-row .input-field{flex:1}
-.input-icon{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.order-tabs{display:flex;gap:6px;margin-bottom:16px}
+.order-tab{flex:1;padding:9px;border-radius:10px;background:var(--card);border:1.5px solid var(--border);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;transition:.2s}
+.order-tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.addr-box{position:relative;display:flex;gap:12px;padding:16px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;margin-bottom:16px}
+.addr-col{display:flex;gap:10px;width:100%}
+.addr-icons{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.addr-icons .pin{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.addr-icons .pin.a{background:rgba(230,57,70,.15);color:var(--primary)}
+.addr-icons .pin.b{background:rgba(0,200,83,.15);color:var(--green)}
+.addr-icons .line{flex:1;width:2px;background:var(--border);margin:4px 0}
+.addr-fields{flex:1;display:flex;flex-direction:column;gap:10px}
+.addr-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:3px}
+.addr-suggest{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--text2);margin-bottom:6px;cursor:pointer;transition:.2s}
+.addr-suggest:hover,.addr-suggest.sel{border-color:var(--primary);color:var(--text);background:rgba(230,57,70,.05)}
+.swap-btn{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--card);border:2px solid var(--border);color:var(--text);font-size:14px;z-index:2}
 .delivery-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.dtype{padding:10px;border-radius:10px;background:var(--card);border:1px solid var(--border);text-align:center;cursor:pointer;transition:.2s}
+.dtype{padding:13px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);text-align:center;cursor:pointer;transition:.2s}
 .dtype.active{border-color:var(--primary);background:rgba(230,57,70,.08)}
-.dtype .dt-icon{font-size:20px;margin-bottom:4px}
-.dtype .dt-label{font-size:10px;color:var(--text2)}
-.cost-summary{background:var(--card);border-radius:12px;padding:14px;margin-bottom:14px}
+.dtype .dt-ic{font-size:22px;margin-bottom:4px}
+.dtype .dt-lb{font-size:11px;font-weight:700}
+.dtype .dt-fee{font-size:10px;color:var(--text3);margin-top:2px}
+.cost-box{background:linear-gradient(135deg,rgba(230,57,70,.08),rgba(255,107,53,.08));border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px}
 .cost-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--text2)}
-.cost-row.total{font-weight:700;color:var(--text);font-size:14px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px}
-.pay-btn{width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-weight:700;font-size:14px;border:none;cursor:pointer}
-
+.cost-row.grand{font-weight:900;color:var(--text);font-size:16px;border-top:1px solid var(--border);padding-top:9px;margin-top:4px}
+.pay-options{display:flex;gap:8px;margin-bottom:14px}
+.pay-op{flex:1;padding:10px;border-radius:10px;background:var(--card);border:1.5px solid var(--border);text-align:center;cursor:pointer;font-size:11px;color:var(--text2);transition:.2s}
+.pay-op.active{border-color:var(--green);color:var(--text);background:rgba(0,200,83,.06)}
 /* ─── AI ANALYSIS ─── */
-.ai-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
-.ai-panel-title{font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.ai-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ai-metric{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
-.ai-metric .val{font-size:18px;font-weight:800}
-.ai-metric .lbl{font-size:10px;color:var(--text3);margin-top:2px}
-.ai-bar{height:6px;border-radius:3px;background:var(--bg);margin-top:8px;overflow:hidden}
-.ai-bar-fill{height:100%;border-radius:3px;transition:width 1.5s ease}
-
+.ai-scan{ text-align:center;padding:10px 0 16px}
+.ai-scan-title{font-size:14px;font-weight:800;color:var(--primary);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.scan-line{height:6px;border-radius:3px;background:var(--bg);overflow:hidden;margin-bottom:10px}
+.scan-line .fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--primary),var(--accent));animation:scanBars 1.6s infinite}
+.ai-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ai-metric{background:var(--bg);border-radius:12px;padding:13px;text-align:center;animation:fadeIn .4s ease both}
+.ai-metric .mv{font-size:20px;font-weight:900}
+.ai-metric .ml{font-size:10px;color:var(--text3);margin-top:2px}
+.score-ring{display:flex;flex-direction:column;align-items:center;padding:6px}
+.score-big{font-size:44px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.prog{height:7px;border-radius:4px;background:var(--bg);overflow:hidden;margin:10px 0}
+.prog .fill{height:100%;border-radius:4px;transition:width 1.2s ease}
 /* ─── COURIER CARD ─── */
-.courier-card{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:12px;padding:12px;margin-bottom:8px}
-.courier-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0}
-.courier-info{flex:1}
-.courier-name{font-size:14px;font-weight:700}
-.courier-meta{font-size:11px;color:var(--text2);display:flex;gap:10px;margin-top:2px}
-.courier-badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(0,200,83,.12);color:var(--green)}
-
-/* ─── ROUTE OPTIMIZER ─── */
-.route-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.route-box{padding:14px;border-radius:12px;text-align:center}
-.route-box.original{background:rgba(255,255,255,.04);border:1px solid var(--border)}
-.route-box.optimized{background:linear-gradient(135deg,rgba(0,200,83,.1),rgba(0,188,212,.1));border:1px solid var(--green)}
-.route-box .route-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.route-box .route-time{font-size:28px;font-weight:900}
-.route-box .route-save{font-size:11px;color:var(--green);font-weight:600;margin-top:4px}
-.route-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.route-tag{padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:4px}
-
-/* ─── MAP PLACEHOLDER ─── */
-.map-container{width:100%;height:200px;border-radius:14px;background:linear-gradient(135deg,#0d1117,#161b22);position:relative;overflow:hidden;margin-bottom:14px;border:1px solid var(--border)}
-.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:20px 20px}
-.map-dot{position:absolute;width:12px;height:12px;border-radius:50%;animation:mapPulse 2s infinite}
-@keyframes mapPulse{0%,100%{box-shadow:0 0 0 0 rgba(230,57,70,.4)}50%{box-shadow:0 0 0 8px transparent}}
-.map-route{position:absolute;border:2px dashed var(--primary);border-radius:20px;opacity:.4}
-.map-pin{position:absolute;font-size:16px;transform:translate(-50%,-100%)}
-
-/* ─── LIVE TRACKING ─── */
-.status-timeline{margin:14px 0}
-.timeline-step{display:flex;gap:12px;padding:8px 0;position:relative}
-.timeline-step::before{content:'';position:absolute;left:11px;top:28px;bottom:-8px;width:2px;background:var(--border)}
-.timeline-step:last-child::before{display:none}
-.timeline-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;z-index:1}
-.timeline-dot.done{background:var(--green);color:#fff}
-.timeline-dot.current{background:var(--primary);color:#fff;animation:blink 1.5s infinite}
-.timeline-dot.pending{background:var(--card);border:2px solid var(--border);color:var(--text3)}
-.timeline-text .step-title{font-size:12px;font-weight:600}
-.timeline-text .step-time{font-size:10px;color:var(--text3)}
-
-/* ─── AI CHAT ─── */
-.chat-window{background:var(--bg);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px}
-.chat-messages{padding:14px;height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
-.chat-msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.5}
-.chat-msg.bot{background:var(--card);align-self:flex-start;border-bottom-left-radius:4px}
-.chat-msg.user{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border)}
-.chat-input input{flex:1;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:12px;outline:none}
-.chat-input button{width:36px;height:36px;border-radius:10px;background:var(--primary);border:none;color:#fff;font-size:14px;cursor:pointer}
-
+.courier-card{display:flex;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:12px}
+.courier-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0}
+.courier-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px}
+.mini-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:5px 10px;border-radius:8px;background:var(--card);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px}
+/* ─── TRACKING ─── */
+.map{width:100%;height:190px;border-radius:14px;background:linear-gradient(135deg,#0d1117,#161b22);position:relative;overflow:hidden;border:1px solid var(--border);margin-bottom:14px}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:22px 22px}
+.map-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--green);animation:pulseGlow 2s infinite}
+.tracking-dash{display:flex;gap:8px;margin-bottom:14px}
+.td{flex:1;background:var(--card);border-radius:12px;padding:11px;text-align:center}
+.td .tv{font-size:17px;font-weight:900}
+.td .tl{font-size:9px;color:var(--text3);margin-top:2px}
+.stepper{position:relative;margin:6px 0}
+.step{display:flex;gap:12px;padding:7px 0}
+.step .sdot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;border:2px solid var(--border);color:var(--text3);transition:.3s}
+.step.done .sdot{background:var(--green);border-color:var(--green);color:#fff}
+.step.now .sdot{background:var(--primary);border-color:var(--primary);color:#fff;animation:blink 1.2s infinite}
+.step .st-title{font-size:13px;font-weight:700}
+.step .st-time{font-size:10px;color:var(--text3)}
+.step.pending{opacity:.45}
+/* ─── CHAT ─── */
+.chat{display:flex;flex-direction:column;height:300px;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg);margin-bottom:14px}
+.chat-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:82%;padding:10px 13px;border-radius:13px;font-size:12.5px;line-height:1.5;animation:fadeUp .3s ease}
+.msg.bot{background:var(--card);align-self:flex-start;border-bottom-left-radius:5px}
+.msg.user{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.chat-actions{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border);flex-wrap:wrap}
+.qa-chip{padding:7px 11px;border-radius:9px;background:var(--card);border:1px solid var(--border);font-size:11px;color:var(--text2);cursor:pointer;transition:.2s}
+.qa-chip:hover{border-color:var(--primary);color:var(--text)}
 /* ─── SIGNATURE ─── */
-.sig-box{background:var(--bg);border:2px dashed var(--border);border-radius:12px;height:80px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;margin-bottom:14px}
-.sig-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.sig-opt{padding:12px;border-radius:10px;background:var(--card);border:1px solid var(--border);text-align:center;cursor:pointer;transition:.2s}
-.sig-opt.active{border-color:var(--green);background:rgba(0,200,83,.08)}
-.sig-opt .sig-icon{font-size:22px;margin-bottom:4px}
-.sig-opt .sig-label{font-size:10px;color:var(--text2)}
-
+.sig-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sig-method{padding:13px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);text-align:center;cursor:pointer;transition:.2s}
+.sig-method.active{border-color:var(--green);background:rgba(0,200,83,.06)}
+.sig-method .sm-ic{font-size:22px;margin-bottom:4px}
+.sig-method .sm-lb{font-size:10px;color:var(--text2)}
+canvas#sigCanvas{width:100%;height:110px;background:var(--bg);border:2px dashed var(--border);border-radius:12px;margin-bottom:14px;display:block;touch-action:none}
 /* ─── STARS ─── */
-.stars{display:flex;gap:8px;justify-content:center;margin:14px 0}
-.star{font-size:28px;cursor:pointer;color:var(--text3);transition:.2s}
-.star.active{color:var(--gold);transform:scale(1.1)}
-
+.stars{display:flex;gap:10px;justify-content:center;margin:8px 0 16px}
+.star{font-size:36px;cursor:pointer;color:var(--text3);transition:.15s;border:none;background:none}
+.star.active{color:var(--gold);transform:scale(1.08)}
+.quick-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.qt{padding:7px 12px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:11px;cursor:pointer;transition:.2s;color:var(--text2)}
+.qt.sel{border-color:var(--gold);background:rgba(255,215,0,.1);color:var(--gold)}
 /* ─── EARNINGS ─── */
-.earnings-hero{text-align:center;padding:20px;background:linear-gradient(135deg,rgba(230,57,70,.1),rgba(255,107,53,.1));border-radius:16px;margin-bottom:14px}
-.earnings-hero .amount{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.earnings-hero .period{font-size:12px;color:var(--text2)}
-.earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.earn-card{background:var(--card);border-radius:10px;padding:12px;text-align:center}
-.earn-card .earn-val{font-size:18px;font-weight:800}
-.earn-card .earn-lbl{font-size:10px;color:var(--text3);margin-top:2px}
-.bar-chart{display:flex;align-items:end;gap:6px;height:80px;padding:10px 0}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.bar-fill{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(to top,var(--primary),var(--accent));transition:height 1s ease}
-.bar-label{font-size:8px;color:var(--text3)}
-
+.earn-hero{text-align:center;background:linear-gradient(135deg,rgba(230,57,70,.12),rgba(255,107,53,.12));border-radius:16px;padding:22px;margin-bottom:14px;border:1px solid var(--border)}
+.earn-amt{font-size:38px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.earn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.earn-card{background:var(--card);border-radius:12px;padding:13px;text-align:center}
+.bars{display:flex;align-items:end;gap:6px;height:90px;padding-top:10px}
+.bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:5px 5px 0 0;background:linear-gradient(to top,var(--primary),var(--accent))}
+.bar-lb{font-size:8px;color:var(--text3)}
 /* ─── DASHBOARD ─── */
-.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.dash-stat{background:var(--card);border-radius:10px;padding:12px;text-align:center}
-.dash-stat .ds-val{font-size:22px;font-weight:800}
-.dash-stat .ds-lbl{font-size:10px;color:var(--text3);margin-top:2px}
-.dash-stat .ds-change{font-size:10px;font-weight:600;margin-top:4px}
-.ds-change.up{color:var(--green)}
-.ds-change.down{color:var(--primary)}
-.heatmap{height:100px;border-radius:12px;background:linear-gradient(135deg,#1a0000,#330000,#660000,#003300,#006600);position:relative;overflow:hidden;margin-bottom:14px;border:1px solid var(--border)}
-.heatmap-label{position:absolute;bottom:6px;right:10px;font-size:9px;color:var(--text3)}
-.heat-dot{position:absolute;border-radius:50%;animation:heatPulse 3s infinite}
-@keyframes heatPulse{0%,100%{opacity:.6}50%{opacity:1}}
-
-/* ─── PREDICTION ─── */
-.pred-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
-.pred-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.pred-chart{height:60px;display:flex;align-items:end;gap:3px}
-.pred-bar{flex:1;border-radius:3px 3px 0 0;background:var(--primary);opacity:.6;transition:height .8s}
-.pred-bar:nth-child(even){background:var(--accent)}
-.pred-insight{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border-radius:8px;margin-top:8px;font-size:11px;color:var(--text2)}
-.pred-insight .pi-icon{font-size:16px}
-
-/* ─── FLOW STEPS ─── */
-.flow-container{position:relative}
-.flow-step{display:grid;grid-template-columns:80px 1fr;gap:24px;padding:40px 0;border-bottom:1px solid var(--border);opacity:.4;transition:.5s;cursor:pointer}
-.flow-step.active{opacity:1}
-.flow-num{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;background:var(--card);border:2px solid var(--border);transition:.3s}
-.flow-step.active .flow-num{background:linear-gradient(135deg,var(--primary),var(--accent));border-color:transparent;color:#fff;box-shadow:0 0 30px var(--primary-glow)}
-.flow-content h3{font-size:20px;font-weight:700;margin-bottom:6px}
-.flow-content p{font-size:14px;color:var(--text2);line-height:1.6}
-.flow-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;margin-right:6px;margin-top:8px}
-
-/* ─── DIVIDER ─── */
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 24px}
-
-/* ─── FOOTER ─── */
-.footer{text-align:center;padding:60px 24px;border-top:1px solid var(--border);margin-top:40px}
-.footer h2{font-size:28px;font-weight:900;margin-bottom:8px}
-.footer h2 .red{color:var(--primary)}
-.footer p{color:var(--text3);font-size:14px;margin-bottom:20px}
-.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
-.footer-links a{color:var(--text2);font-size:13px;transition:.2s}
-.footer-links a:hover{color:var(--primary)}
-
-/* ─── SCROLLBAR ─── */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-
-/* ─── RESPONSIVE ─── */
-@media(max-width:768px){
-  .topbar nav{display:none}
-  .topbar .mobile-menu{display:block}
-  .phone-section{grid-template-columns:1fr;text-align:center}
-  .phone-section.reverse{direction:ltr}
-  .hero-stats{flex-direction:column;gap:20px}
-  .cards-grid{grid-template-columns:1fr}
-  .flow-step{grid-template-columns:1fr;text-align:center;gap:12px;justify-items:center}
-  .flow-num{margin:0 auto}
-  .route-compare{grid-template-columns:1fr}
-  .dash-stats{grid-template-columns:1fr}
-  .ai-metrics{grid-template-columns:1fr}
-  .sig-options{grid-template-columns:1fr}
-  .earnings-grid{grid-template-columns:1fr}
-}
-
-/* ─── ANIMATIONS ─── */
-.fade-in{opacity:0;transform:translateY(30px);transition:.7s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
-
-/* ─── MOBILE NAV DRAWER ─── */
-.mobile-drawer{position:fixed;top:64px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:16px;display:none;z-index:999}
-.mobile-drawer.open{display:block}
-.mobile-drawer a{display:block;padding:12px;font-size:14px;font-weight:600;color:var(--text2);border-radius:8px}
-.mobile-drawer a:hover{background:var(--card);color:var(--text)}
-
-/* ─── TAB SYSTEM ─── */
-.tab-row{display:flex;gap:4px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px}
-.tab-btn{padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text2);font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:.2s}
-.tab-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
-
-/* ─── DEMO MODE ─── */
-.demo-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center}
-.demo-overlay.open{display:flex}
-.demo-screen{width:min(90vw,420px);max-height:85vh;overflow-y:auto;background:var(--surface);border-radius:24px;border:1px solid var(--border);padding:24px;position:relative}
-.demo-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--card);border:none;color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.demo-progress{display:flex;gap:4px;margin-bottom:20px}
-.demo-progress .dp{flex:1;height:3px;border-radius:2px;background:var(--border);transition:.3s}
-.demo-progress .dp.done{background:var(--green)}
-.demo-progress .dp.current{background:var(--primary)}
-.demo-step-content{min-height:300px}
-.demo-step-content h3{font-size:18px;font-weight:800;margin-bottom:4px}
-.demo-step-content .demo-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
-.demo-nav{display:flex;gap:8px;margin-top:20px}
-.demo-nav button{flex:1;padding:12px;border-radius:10px;font-weight:700;font-size:13px;border:none;cursor:pointer}
-.demo-nav .demo-prev{background:var(--card);color:var(--text)}
-.demo-nav .demo-next{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff}
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.dash{background:var(--card);border-radius:12px;padding:13px;text-align:center}
+.dash .dv{font-size:22px;font-weight:900}
+.dash .dl{font-size:9px;color:var(--text3);margin-top:2px}
+.dash .dc{font-size:9px;font-weight:700;margin-top:3px}
+.dc.up{color:var(--green)}
+.heat{height:110px;border-radius:12px;background:linear-gradient(135deg,#1a0000,#330000,#660000,#003300,#006600);position:relative;overflow:hidden;margin-bottom:10px;border:1px solid var(--border)}
+.heat-dot{position:absolute;border-radius:50%;animation:pulseGlow 3s infinite}
+/* quick stat progress list */
+.stat-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin:6px 0}
+/* toasts */
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--primary);color:var(--text);padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;z-index:5000;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center}
+#toast.show{opacity:1;top:80px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px;width:100%;max-width:420px;animation:popIn .35s ease}
+.modal-close{float:right;background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.move-dot{position:absolute;font-size:15px;transform:translate(-50%,-100%);transition:top 3s ease,left 3s ease}
 </style>
 </head>
 <body>
 
-<!-- ═══════ TOPBAR ═══════ -->
-<header class="topbar">
-  <div class="logo">Kungfu<span>Express</span></div>
-  <nav id="mainNav">
-    <a href="#hero" class="active">Home</a>
-    <a href="#features">Features</a>
-    <a href="#flow">Demo Flow</a>
-    <a href="#courier">Courier</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#prediction">AI Predict</a>
-  </nav>
-  <button class="demo-btn" onclick="openDemo()">▶ Watch Demo</button>
-  <button class="mobile-menu" onclick="toggleMobile()">☰</button>
-</header>
-<div class="mobile-drawer" id="mobileDrawer">
-  <a href="#hero" onclick="toggleMobile()">Home</a>
-  <a href="#features" onclick="toggleMobile()">Features</a>
-  <a href="#flow" onclick="toggleMobile()">Demo Flow</a>
-  <a href="#courier" onclick="toggleMobile()">Courier</a>
-  <a href="#dashboard" onclick="toggleMobile()">Dashboard</a>
-  <a href="#prediction" onclick="toggleMobile()">AI Predict</a>
+<div class="app" id="app">
+
+  <!-- TOPBAR -->
+  <div class="app-top">
+    <div class="app-topbar">
+      <div class="logo" onclick="showHome()">🥋 <b>Kungfu</b><span>Express</span></div>
+      <div class="top-actions">
+        <button class="icon-btn" onclick="toast('🤖 AI Assistant is here to help')">🤖</button>
+        <button class="icon-btn" onclick="showHelp()">?</button>
+      </div>
+    </div>
+    <div class="role-switch" id="roleSwitch">
+      <button class="role-btn active" data-role="customer" onclick="setRole('customer')">🚀 Customer</button>
+      <button class="role-btn" data-role="courier" onclick="setRole('courier')">🛵 Courier</button>
+      <button class="role-btn" data-role="admin" onclick="setRole('admin')">🏢 Admin</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="app-content" id="content"></div>
+
+  <!-- BOTTOM NAV -->
+  <div class="app-nav" id="bottomNav"></div>
 </div>
 
-<!-- ═══════ HERO ═══════ -->
-<section class="hero" id="hero">
-  <div class="hero-badge"><span class="dot"></span> AI-Powered Platform — Live Now</div>
-  <h1><span class="red">Kungfu</span> Express<br><span class="orange">Smart Delivery</span></h1>
-  <p>Next-generation logistics platform powered by artificial intelligence. Smart routing, real-time tracking, and predictive analytics — all in one ecosystem.</p>
-  <div class="hero-buttons">
-    <button class="btn-primary" onclick="openDemo()">▶ Watch Demo</button>
-    <button class="btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Explore Features ↓</button>
-  </div>
-  <div class="hero-stats">
-    <div class="stat"><div class="num">50K+</div><div class="lbl">Daily Orders</div></div>
-    <div class="stat"><div class="num">2,800</div><div class="lbl">Active Couriers</div></div>
-    <div class="stat"><div class="num">99.2%</div><div class="lbl">On-Time Rate</div></div>
-    <div class="stat"><div class="num">4.9★</div><div class="lbl">Avg Rating</div></div>
-  </div>
-</section>
-
-<!-- ═══════ 1. CREATE ORDER ═══════ -->
-<div class="divider"></div>
-<section class="section" id="features">
-  <div class="section-label">📦 Core Feature</div>
-  <div class="section-title">1. Create Order</div>
-  <div class="section-desc">Instant delivery, scheduled pickup, multi-stop routing — all with AI-powered address autocomplete and one-tap reorder.</div>
-
-  <div class="phone-section">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:41</span><span>●●● 🔋 87%</span></div>
-          <div class="phone-content">
-            <div class="order-header"><h4>New Delivery</h4><span style="font-size:11px;color:var(--primary)">🤖 AI Assist</span></div>
-            <div class="order-type-tabs">
-              <div class="order-type-tab active">Instant</div>
-              <div class="order-type-tab">Scheduled</div>
-              <div class="order-type-tab">Multi-stop</div>
-            </div>
-            <div class="input-group">
-              <label>Pickup Address</label>
-              <div class="input-icon-row">
-                <div class="input-icon">📍</div>
-                <input class="input-field" value="123 Nathan Road, Tsim Sha Tsui" readonly>
-              </div>
-            </div>
-            <div style="text-align:center;color:var(--text3);font-size:18px;margin:4px 0">↕</div>
-            <div class="input-group">
-              <label>Delivery Address</label>
-              <div class="input-icon-row">
-                <div class="input-icon">🏁</div>
-                <input class="input-field" value="88 Queen's Road, Central" readonly>
-              </div>
-            </div>
-            <div class="delivery-types">
-              <div class="dtype active"><div class="dt-icon">📄</div><div class="dt-label">Document</div></div>
-              <div class="dtype"><div class="dt-icon">📦</div><div class="dt-label">Package</div></div>
-              <div class="dtype"><div class="dt-icon">🥬</div><div class="dt-label">Fresh Food</div></div>
-              <div class="dtype"><div class="dt-icon">🧊</div><div class="dt-label">Cold Chain</div></div>
-            </div>
-            <div class="cost-summary">
-              <div class="cost-row"><span>Base Fee</span><span>HK$35</span></div>
-              <div class="cost-row"><span>Distance (4.2km)</span><span>HK$28</span></div>
-              <div class="cost-row"><span>AI Surcharge</span><span>-HK$5</span></div>
-              <div class="cost-row total"><span>Total</span><span>HK$58</span></div>
-            </div>
-            <button class="pay-btn">Confirm & Pay HK$58</button>
-          </div>
-          <div class="phone-nav"><span class="active">🏠 Home</span><span>📦 Orders</span><span>🤖 AI</span><span>👤 Profile</span></div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Smart Order Creation</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">AI auto-fills addresses from partial input, suggests optimal delivery types based on package content, and calculates real-time pricing.</p>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--green)">✅</span> <span style="font-size:14px">Instant & scheduled delivery</span></div>
-        <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--green)">✅</span> <span style="font-size:14px">Multi-stop routing support</span></div>
-        <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--green)">✅</span> <span style="font-size:14px">Document, parcel, fresh food & cold chain</span></div>
-        <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--green)">✅</span> <span style="font-size:14px">AI smart address autocomplete</span></div>
-        <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--green)">✅</span> <span style="font-size:14px">One-tap reorder history</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 2. AI ORDER ANALYSIS ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">🧠 AI Engine</div>
-  <div class="section-title">2. AI Smart Order Analysis</div>
-  <div class="section-desc">Real-time computation of courier proximity, traffic conditions, weather impact, delivery ETA, and fuel cost optimization.</div>
-
-  <div class="phone-section reverse">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:41</span><span>●●● 🔋 87%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;margin-bottom:12px">
-              <div style="font-size:11px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:1px">🤖 AI Analyzing</div>
-              <div style="font-size:10px;color:var(--text3);margin-top:2px">Processing 14 data points...</div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-panel-title">⚡ Delivery Estimate</div>
-              <div class="ai-metrics">
-                <div class="ai-metric"><div class="val" style="color:var(--green)">3 min</div><div class="lbl">Pickup ETA</div></div>
-                <div class="ai-metric"><div class="val" style="color:var(--blue)">18 min</div><div class="lbl">Delivery ETA</div></div>
-                <div class="ai-metric"><div class="val" style="color:var(--accent)">2.1 km</div><div class="lbl">Nearest Courier</div></div>
-                <div class="ai-metric"><div class="val" style="color:var(--cyan)">22°C</div><div class="lbl">Weather</div></div>
-              </div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-panel-title">📊 Optimization Score</div>
-              <div style="font-size:28px;font-weight:900;text-align:center;margin:8px 0;color:var(--green)">96/100</div>
-              <div class="ai-bar"><div class="ai-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
-              <div class="pred-insight"><span class="pi-icon">💡</span> Route is 23% more efficient during off-peak</div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-panel-title">🛵 Best Match</div>
-              <div class="courier-card">
-                <div class="courier-avatar">A</div>
-                <div class="courier-info">
-                  <div class="courier-name">Alex Wong</div>
-                  <div class="courier-meta"><span>⭐ 4.9</span><span>2.1km</span><span>🛵 Motorbike</span></div>
-                </div>
-                <div class="courier-badge">Best</div>
-              </div>
-            </div>
-            <button class="pay-btn" style="margin-top:8px">Accept AI Recommendation</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Real-Time AI Computation</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Our AI engine analyzes multiple live data streams simultaneously to find the optimal delivery solution.</p>
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr">
-        <div class="feature-card"><div class="icon icon-blue">🛰️</div><h3>GPS Tracking</h3><p>Real-time courier locations within 5km radius</p></div>
-        <div class="feature-card"><div class="icon icon-cyan">🌤️</div><h3>Weather Data</h3><p>Live weather impact on delivery conditions</p></div>
-        <div class="feature-card"><div class="icon icon-orange">🚗</div><h3>Traffic Analysis</h3><p>Live traffic density & congestion data</p></div>
-        <div class="feature-card"><div class="icon icon-green">⛽</div><h3>Fuel Cost</h3><p>Optimized fuel usage calculation</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 3. COURIER MATCHING ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">🛵 Smart Match</div>
-  <div class="section-title">3. AI Courier Matching</div>
-  <div class="section-desc">Intelligent dispatch based on GPS position, rating, online status, vehicle type, and current load capacity.</div>
-
-  <div class="phone-section">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:42</span><span>●●● 🔋 86%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;padding:20px 0">
-              <div style="font-size:40px;margin-bottom:12px;animation:blink 1.5s infinite">🔍</div>
-              <div style="font-size:14px;font-weight:700;margin-bottom:4px">Finding Best Courier...</div>
-              <div style="font-size:11px;color:var(--text3)">Scanning 12 nearby couriers</div>
-              <div class="ai-bar" style="margin:16px 30px"><div class="ai-bar-fill" style="width:100%;background:var(--primary);animation:scanBar 3s ease"></div></div>
-            </div>
-            <style>@keyframes scanBar{from{width:0}to{width:100%}}</style>
-            <div style="font-size:11px;color:var(--text3);margin-bottom:8px;text-align:center">Analyzing: GPS · Rating · Load · Vehicle</div>
-            <div class="courier-card" style="border:1px solid var(--green);background:rgba(0,200,83,.05)">
-              <div class="courier-avatar">A</div>
-              <div class="courier-info">
-                <div class="courier-name">Alex Wong ⭐ 4.9</div>
-                <div class="courier-meta"><span>📍 1.2km</span><span>🛵 Motorbike</span><span>📦 2/5</span></div>
-                <div style="font-size:10px;color:var(--green);margin-top:4px">Acceptance Rate: 98%</div>
-              </div>
-              <div class="courier-badge">Matched ✓</div>
-            </div>
-            <div class="courier-card" style="opacity:.5">
-              <div class="courier-avatar" style="background:linear-gradient(135deg,var(--blue),var(--purple))">S</div>
-              <div class="courier-info">
-                <div class="courier-name">Sarah Li ⭐ 4.7</div>
-                <div class="courier-meta"><span>📍 2.8km</span><span>🚗 Van</span><span>📦 4/8</span></div>
-              </div>
-              <div style="padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,.05);color:var(--text3)">Queue #2</div>
-            </div>
-            <div class="courier-card" style="opacity:.3">
-              <div class="courier-avatar" style="background:linear-gradient(135deg,var(--gold),var(--accent))">M</div>
-              <div class="courier-info">
-                <div class="courier-name">Mike Chen ⭐ 4.8</div>
-                <div class="courier-meta"><span>📍 3.5km</span><span>🛵 Motorbike</span><span>📦 1/5</span></div>
-              </div>
-              <div style="padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,.05);color:var(--text3)">Queue #3</div>
-            </div>
-            <button class="pay-btn" style="margin-top:12px">Confirm Alex Wong</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Intelligent Dispatch</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">AI matches orders to the optimal courier in under 5 seconds, considering six key factors.</p>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:12px">
-          <div style="font-size:24px">📍</div>
-          <div><div style="font-size:13px;font-weight:700">GPS Position</div><div style="font-size:11px;color:var(--text3)">Real-time proximity matching</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:12px">
-          <div style="font-size:24px">⭐</div>
-          <div><div style="font-size:13px;font-weight:700">Rating Score</div><div style="font-size:11px;color:var(--text3)">Priority to top-rated couriers</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:12px">
-          <div style="font-size:24px">🟢</div>
-          <div><div style="font-size:13px;font-weight:700">Online Status</div><div style="font-size:11px;color:var(--text3)">Active & available couriers only</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:12px">
-          <div style="font-size:24px">🛵</div>
-          <div><div style="font-size:13px;font-weight:700">Vehicle Type</div><div style="font-size:11px;color:var(--text3)">Match vehicle to package size</div></div>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--card);border-radius:12px">
-          <div style="font-size:24px">📦</div>
-          <div><div style="font-size:13px;font-weight:700">Load Capacity</div><div style="font-size:11px;color:var(--text3)">Current orders vs max capacity</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 4. COURIER ACCEPTS ═══════ -->
-<div class="divider"></div>
-<section class="section" id="courier">
-  <div class="section-label">📲 Courier Side</div>
-  <div class="section-title">4. Courier Acceptance System</div>
-  <div class="section-desc">Push notification with order details, income estimate, delivery distance, and estimated time — accept or decline with one tap.</div>
-
-  <div class="phone-section reverse">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:42</span><span>●●● 🔋 74%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;padding:8px 0;margin-bottom:8px">
-              <div style="font-size:36px;margin-bottom:8px">📦</div>
-              <div style="font-size:11px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:1px">New Order Available</div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-metrics" style="grid-template-columns:1fr 1fr 1fr">
-                <div class="ai-metric"><div class="val" style="color:var(--green);font-size:16px">HK$58</div><div class="lbl">Income</div></div>
-                <div class="ai-metric"><div class="val" style="color:var(--blue);font-size:16px">4.2 km</div><div class="lbl">Distance</div></div>
-                <div class="ai-metric"><div class="val" style="color:var(--accent);font-size:16px">21 min</div><div class="lbl">Est. Time</div></div>
-              </div>
-            </div>
-            <div style="background:var(--card);border-radius:12px;padding:12px;margin-bottom:12px">
-              <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span>📍</span><span style="font-size:12px">123 Nathan Road, TST</span></div>
-              <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span>🏁</span><span style="font-size:12px">88 Queen's Road, Central</span></div>
-              <div style="display:flex;gap:8px;align-items:center"><span>📄</span><span style="font-size:12px">Document · 0.5kg</span></div>
-            </div>
-            <div class="map-container">
-              <div class="map-grid"></div>
-              <div class="map-pin" style="top:60%;left:25%">📍</div>
-              <div class="map-pin" style="top:25%;left:75%">🏁</div>
-              <div class="map-dot" style="top:45%;left:50%;background:var(--primary)"></div>
-            </div>
-            <div style="display:flex;gap:10px">
-              <button style="flex:1;padding:14px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text);font-weight:700;font-size:13px;cursor:pointer">Decline</button>
-              <button style="flex:2;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--cyan));border:none;color:#fff;font-weight:700;font-size:13px;cursor:pointer">Accept & Navigate →</button>
-            </div>
-            <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--text3)">Auto-decline in 30s</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">One-Tap Acceptance</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Couriers receive instant push notifications with full order details, estimated earnings, and route preview before accepting.</p>
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr">
-        <div class="feature-card"><div class="icon icon-green">💰</div><h3>Income Preview</h3><p>See exact earnings before accepting</p></div>
-        <div class="feature-card"><div class="icon icon-blue">🗺️</div><h3>Route Preview</h3><p>Map view of pickup & delivery</p></div>
-        <div class="feature-card"><div class="icon icon-orange">⏱️</div><h3>Time Estimate</h3><p>AI-calculated delivery duration</p></div>
-        <div class="feature-card"><div class="icon icon-purple">🧭</div><h3>Auto-Navigate</h3><p>Instant GPS navigation on accept</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 5. AI ROUTE OPTIMIZATION ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">🗺️ Route AI</div>
-  <div class="section-title">5. AI Route Optimization</div>
-  <div class="section-desc">Real-time analysis of traffic congestion, highway tolls, weather conditions, and vehicle flow to find the fastest route.</div>
-
-  <div class="phone-section">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:43</span><span>●●● 🔋 73%</span></div>
-          <div class="phone-content">
-            <div style="font-size:11px;color:var(--primary);font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:10px">🤖 AI Route Optimizer</div>
-            <div class="route-compare">
-              <div class="route-box original">
-                <div class="route-label">Original Route</div>
-                <div class="route-time" style="color:var(--text3)">35 min</div>
-                <div style="font-size:10px;color:var(--text3)">7.8 km</div>
-              </div>
-              <div class="route-box optimized">
-                <div class="route-label">AI Route</div>
-                <div class="route-time" style="color:var(--green)">22 min</div>
-                <div class="route-save">↓ 13 min saved</div>
-              </div>
-            </div>
-            <div class="route-tags">
-              <div class="route-tag">🚗 Traffic: Heavy</div>
-              <div class="route-tag">🌧️ Rain: Light</div>
-              <div class="route-tag">⛽ Fuel: -18%</div>
-              <div class="route-tag">🌉 Tolls: Avoided</div>
-            </div>
-            <div class="map-container" style="height:180px">
-              <div class="map-grid"></div>
-              <div class="map-pin" style="top:70%;left:20%">📍</div>
-              <div class="map-pin" style="top:15%;left:80%">🏁</div>
-              <div class="map-route" style="top:20%;left:15%;width:70%;height:55%;border-color:var(--text3);opacity:.2"></div>
-              <div class="map-route" style="top:25%;left:25%;width:50%;height:40%;border-color:var(--green);opacity:.6"></div>
-              <div class="map-dot" style="top:45%;left:45%;background:var(--green);animation-delay:.5s"></div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-panel-title">💡 Route Insights</div>
-              <div style="font-size:11px;color:var(--text2);line-height:1.6">
-                <div style="margin-bottom:4px">• Avoided Nathan Rd — 40% congestion detected</div>
-                <div style="margin-bottom:4px">• Taken Central Harbour Route — 15 min faster</div>
-                <div>• Fuel savings: HK$12 vs original route</div>
-              </div>
-            </div>
-            <button class="pay-btn" style="margin-top:8px">Follow AI Route</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Save 13 Minutes & 18% Fuel</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">AI continuously recalculates routes based on real-time conditions, finding shortcuts that save both time and money.</p>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div style="padding:16px;background:var(--card);border-radius:12px;display:flex;justify-content:space-between;align-items:center">
-          <div><div style="font-size:13px;font-weight:700">Time Saved</div><div style="font-size:11px;color:var(--text3)">Per delivery trip</div></div>
-          <div style="font-size:24px;font-weight:900;color:var(--green)">-13 min</div>
-        </div>
-        <div style="padding:16px;background:var(--card);border-radius:12px;display:flex;justify-content:space-between;align-items:center">
-          <div><div style="font-size:13px;font-weight:700">Fuel Saved</div><div style="font-size:11px;color:var(--text3)">Per delivery trip</div></div>
-          <div style="font-size:24px;font-weight:900;color:var(--accent)">-18%</div>
-        </div>
-        <div style="padding:16px;background:var(--card);border-radius:12px;display:flex;justify-content:space-between;align-items:center">
-          <div><div style="font-size:13px;font-weight:700">Cost Saved</div><div style="font-size:11px;color:var(--text3)">Per delivery trip</div></div>
-          <div style="font-size:24px;font-weight:900;color:var(--gold)">HK$12</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 6. LIVE TRACKING ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">📍 Live</div>
-  <div class="section-title">6. Real-Time Tracking</div>
-  <div class="section-desc">Watch your courier on the map in real-time with speed, ETA, and status updates at every step.</div>
-
-  <div class="phone-section reverse">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>9:51</span><span>●●● 🔋 71%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;margin-bottom:8px">
-              <div style="font-size:11px;color:var(--green);font-weight:700">🛵 IN TRANSIT</div>
-              <div style="font-size:20px;font-weight:900;margin:4px 0">12 min</div>
-              <div style="font-size:10px;color:var(--text3)">Remaining</div>
-            </div>
-            <div class="map-container" style="height:160px">
-              <div class="map-grid"></div>
-              <div class="map-pin" style="top:70%;left:20%">📍</div>
-              <div class="map-pin" style="top:15%;left:80%">🏁</div>
-              <div class="map-dot" style="top:40%;left:50%;background:var(--green)"></div>
-              <div style="position:absolute;top:40%;left:50%;transform:translate(8px,-20px);font-size:14px">🛵</div>
-            </div>
-            <div style="display:flex;gap:8px;margin-bottom:12px">
-              <div style="flex:1;background:var(--card);border-radius:10px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800">32</div><div style="font-size:9px;color:var(--text3)">km/h</div></div>
-              <div style="flex:1;background:var(--card);border-radius:10px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800">2.8</div><div style="font-size:9px;color:var(--text3)">km left</div></div>
-              <div style="flex:1;background:var(--card);border-radius:10px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800">Alex</div><div style="font-size:9px;color:var(--text3)">Courier</div></div>
-            </div>
-            <div class="status-timeline">
-              <div class="timeline-step"><div class="timeline-dot done">✓</div><div class="timeline-text"><div class="step-title">Order Created</div><div class="step-time">9:41 AM</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot done">✓</div><div class="timeline-text"><div class="step-title">Courier Assigned</div><div class="step-time">9:42 AM</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot done">✓</div><div class="timeline-text"><div class="step-title">Heading to Pickup</div><div class="step-time">9:43 AM</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot done">✓</div><div class="timeline-text"><div class="step-title">Package Picked Up</div><div class="step-time">9:47 AM</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot current">●</div><div class="timeline-text"><div class="step-title" style="color:var(--primary)">In Transit</div><div class="step-time">9:48 AM — Now</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text"><div class="step-title">Out for Delivery</div><div class="step-time">~9:56 AM</div></div></div>
-              <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text"><div class="step-title">Delivered ✓</div><div class="step-time">~10:03 AM</div></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Every Step, Visible</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Full transparency from order creation to delivery completion with 7 status checkpoints and live map.</p>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px"><span style="color:var(--green)">✅</span> Order Created</div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px"><span style="color:var(--green)">✅</span> Courier Assigned</div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px"><span style="color:var(--green)">✅</span> Heading to Pickup</div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px"><span style="color:var(--green)">✅</span> Package Picked Up</div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:rgba(230,57,70,.08);border:1px solid var(--primary);border-radius:10px;font-size:13px"><span style="color:var(--primary)">📍</span> <b>In Transit</b></div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px;opacity:.4">⏳ Out for Delivery</div>
-        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--card);border-radius:10px;font-size:13px;opacity:.4">⏳ Delivered</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 7. AI CUSTOMER SERVICE ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">🤖 Support</div>
-  <div class="section-title">7. AI Customer Service</div>
-  <div class="section-desc">24/7 intelligent chatbot for order inquiries, address changes, billing questions, complaints, and auto-refund processing.</div>
-
-  <div class="phone-section">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>10:15</span><span>●●● 🔋 68%</span></div>
-          <div class="phone-content" style="padding:0;display:flex;flex-direction:column;height:100%">
-            <div style="padding:12px 16px;text-align:center;border-bottom:1px solid var(--border)">
-              <div style="font-size:14px;font-weight:700">🤖 AI Assistant</div>
-              <div style="font-size:10px;color:var(--green)">Online · Avg response: 0.8s</div>
-            </div>
-            <div class="chat-messages" style="flex:1">
-              <div class="chat-msg bot">Hi! I'm Kungfu Express AI Assistant. How can I help you today? 👋</div>
-              <div class="chat-msg user">Where is my order #KE-28451?</div>
-              <div class="chat-msg bot">📦 Order #KE-28451<br><br>Status: <b style="color:var(--green)">In Transit</b><br>Courier: Alex Wong ⭐ 4.9<br>ETA: 8 minutes<br><br>Currently on Nathan Road heading to Central. Would you like to track live?</div>
-              <div class="chat-msg user">Change delivery address please</div>
-              <div class="chat-msg bot">Sure! I can update the delivery address. Please note:<br><br>• Address change may adjust the fee<br>• Courier will be rerouted automatically<br><br>Please type the new address:</div>
-            </div>
-            <div class="chat-input">
-              <input placeholder="Type your message..." readonly>
-              <button>➤</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Always-On AI Support</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Natural language understanding with instant responses. Handles complex queries and escalates to humans when needed.</p>
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr">
-        <div class="feature-card"><div class="icon icon-blue">🔍</div><h3>Order Inquiry</h3><p>Real-time order status & tracking</p></div>
-        <div class="feature-card"><div class="icon icon-orange">📍</div><h3>Address Change</h3><p>Modify delivery address on the fly</p></div>
-        <div class="feature-card"><div class="icon icon-green">💰</div><h3>Billing Query</h3><p>Fee breakdown & receipt requests</p></div>
-        <div class="feature-card"><div class="icon icon-red">⚠️</div><h3>Complaints</h3><p>File & track complaint resolution</p></div>
-        <div class="feature-card"><div class="icon icon-purple">🔄</div><h3>Auto Refund</h3><p>Instant refund eligibility check</p></div>
-        <div class="feature-card"><div class="icon icon-cyan">🌐</div><h3>Multi-Language</h3><p>EN, 中文, 日本語 support</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 8. E-SIGNATURE ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">✍️ Verification</div>
-  <div class="section-title">8. E-Signature System</div>
-  <div class="section-desc">Secure proof of delivery with handwritten signature, QR code scan, OTP verification, and face recognition for high-value parcels.</div>
-
-  <div class="phone-section reverse">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>10:03</span><span>●●● 🔋 66%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;margin-bottom:12px">
-              <div style="font-size:40px">✅</div>
-              <div style="font-size:14px;font-weight:700;margin-top:4px">Package Arrived!</div>
-              <div style="font-size:11px;color:var(--text3)">Please confirm delivery</div>
-            </div>
-            <div class="sig-options">
-              <div class="sig-opt active"><div class="sig-icon">✍️</div><div class="sig-label">Signature</div></div>
-              <div class="sig-opt"><div class="sig-icon">📱</div><div class="sig-label">QR Code</div></div>
-              <div class="sig-opt"><div class="sig-icon">🔢</div><div class="sig-label">OTP Code</div></div>
-            </div>
-            <div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600">Sign below:</div>
-            <div class="sig-box">
-              <svg width="200" height="50" viewBox="0 0 200 50"><path d="M10 40 Q30 10 50 30 T90 25 Q110 20 130 35 T170 20 L180 25" fill="none" stroke="#e63946" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
-            <div style="display:flex;gap:8px;margin-bottom:12px">
-              <div style="flex:1;background:var(--card);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text3)">Value</div><div style="font-size:13px;font-weight:700">HK$250</div></div>
-              <div style="flex:1;background:var(--card);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text3)">Weight</div><div style="font-size:13px;font-weight:700">0.5 kg</div></div>
-              <div style="flex:1;background:var(--card);border-radius:8px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text3)">Type</div><div style="font-size:13px;font-weight:700">Document</div></div>
-            </div>
-            <button class="pay-btn">Confirm Delivery ✓</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Secure Proof of Delivery</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Multiple verification methods ensure packages reach the right person with tamper-proof digital proof.</p>
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr">
-        <div class="feature-card"><div class="icon icon-red">✍️</div><h3>Handwritten</h3><p>Draw signature directly on screen</p></div>
-        <div class="feature-card"><div class="icon icon-blue">📱</div><h3>QR Code</h3><p>Scan QR to confirm receipt</p></div>
-        <div class="feature-card"><div class="icon icon-green">🔢</div><h3>OTP Code</h3><p>6-digit verification sent to recipient</p></div>
-        <div class="feature-card"><div class="icon icon-purple">🧑</div><h3>Face Recognition</h3><p>For high-value parcels over HK$500</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 9. RATING SYSTEM ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">⭐ Rate</div>
-  <div class="section-title">9. Rating System</div>
-  <div class="section-desc">Post-delivery feedback with star ratings, text reviews, and photo uploads to maintain service quality.</div>
-
-  <div class="phone-section">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>10:05</span><span>●●● 🔋 65%</span></div>
-          <div class="phone-content">
-            <div style="text-align:center;margin-bottom:16px">
-              <div style="font-size:40px">🎉</div>
-              <div style="font-size:14px;font-weight:700;margin-top:4px">Delivery Complete!</div>
-              <div style="font-size:11px;color:var(--text3)">Order #KE-28451</div>
-            </div>
-            <div class="courier-card" style="border:1px solid var(--border)">
-              <div class="courier-avatar">A</div>
-              <div class="courier-info">
-                <div class="courier-name">Alex Wong</div>
-                <div class="courier-meta"><span>⏱️ 18 min</span><span>🛵 Motorbike</span></div>
-              </div>
-            </div>
-            <div style="text-align:center;margin:16px 0 4px;font-size:13px;font-weight:600">Rate your experience</div>
-            <div class="stars">
-              <span class="star active">★</span>
-              <span class="star active">★</span>
-              <span class="star active">★</span>
-              <span class="star active">★</span>
-              <span class="star active">★</span>
-            </div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px">
-              <span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px;color:var(--text2);border:1px solid var(--border)">😊 Friendly</span>
-              <span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px;color:var(--text2);border:1px solid var(--border)">⚡ Fast</span>
-              <span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px;color:var(--text2);border:1px solid var(--border)">📦 Careful</span>
-              <span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px;color:var(--text2);border:1px solid var(--border)">🗺️ Great Route</span>
-            </div>
-            <div class="input-group">
-              <label>Write a review</label>
-              <textarea class="input-field" rows="3" readonly style="resize:none">Alex was super fast and professional. Package was in perfect condition!</textarea>
-            </div>
-            <div style="border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;margin-bottom:14px">
-              <div style="font-size:20px;margin-bottom:4px">📷</div>
-              <div style="font-size:11px;color:var(--text3)">Tap to upload photo</div>
-            </div>
-            <button class="pay-btn">Submit Review ⭐</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Quality Assurance</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Every delivery is rated to ensure consistent quality. Couriers with high ratings get priority in AI matching.</p>
-      <div style="background:var(--card);border-radius:16px;padding:20px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <div><div style="font-size:13px;font-weight:700">Platform Average</div><div style="font-size:11px;color:var(--text3)">Last 30 days</div></div>
-          <div style="font-size:32px;font-weight:900;color:var(--gold)">4.92</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;width:12px">5★</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="width:82%;height:100%;background:var(--gold);border-radius:4px"></div></div><span style="font-size:10px;color:var(--text3);width:28px">82%</span></div>
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;width:12px">4★</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="width:12%;height:100%;background:var(--gold);border-radius:4px"></div></div><span style="font-size:10px;color:var(--text3);width:28px">12%</span></div>
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;width:12px">3★</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="width:4%;height:100%;background:var(--accent);border-radius:4px"></div></div><span style="font-size:10px;color:var(--text3);width:28px">4%</span></div>
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;width:12px">2★</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="width:1.5%;height:100%;background:var(--primary);border-radius:4px"></div></div><span style="font-size:10px;color:var(--text3);width:28px">1.5%</span></div>
-          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;width:12px">1★</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="width:0.5%;height:100%;background:var(--primary);border-radius:4px"></div></div><span style="font-size:10px;color:var(--text3);width:28px">0.5%</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 10. COURIER EARNINGS ═══════ -->
-<div class="divider"></div>
-<section class="section">
-  <div class="section-label">💰 Earnings</div>
-  <div class="section-title">10. Courier Earnings Center</div>
-  <div class="section-desc">Comprehensive earnings dashboard with daily, weekly, and monthly breakdowns, order stats, and bonus tracking.</div>
-
-  <div class="phone-section reverse">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status-bar"><span>11:00</span><span>●●● 🔋 58%</span></div>
-          <div class="phone-content">
-            <div style="font-size:11px;color:var(--text3);text-align:center">Good morning, Alex 👋</div>
-            <div class="earnings-hero">
-              <div class="amount">HK$1,280</div>
-              <div class="period">Today's Earnings</div>
-            </div>
-            <div class="earnings-grid">
-              <div class="earn-card"><div class="earn-val" style="color:var(--green)">HK$7,850</div><div class="earn-lbl">This Week</div></div>
-              <div class="earn-card"><div class="earn-val" style="color:var(--blue)">HK$32,400</div><div class="earn-lbl">This Month</div></div>
-              <div class="earn-card"><div class="earn-val" style="color:var(--accent)">18</div><div class="earn-lbl">Orders Today</div></div>
-              <div class="earn-card"><div class="earn-val" style="color:var(--gold)">98%</div><div class="earn-lbl">Accept Rate</div></div>
-            </div>
-            <div style="background:var(--card);border-radius:12px;padding:12px;margin-bottom:12px">
-              <div style="font-size:11px;font-weight:700;margin-bottom:8px">📊 Weekly Trend</div>
-              <div class="bar-chart">
-                <div class="bar-col"><div class="bar-fill" style="height:60%"></div><div class="bar-label">Mon</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:80%"></div><div class="bar-label">Tue</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:45%"></div><div class="bar-label">Wed</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:90%"></div><div class="bar-label">Thu</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:70%"></div><div class="bar-label">Fri</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:55%"></div><div class="bar-label">Sat</div></div>
-                <div class="bar-col"><div class="bar-fill" style="height:95%"></div><div class="bar-label">Sun</div></div>
-              </div>
-            </div>
-            <div class="ai-panel">
-              <div class="ai-panel-title">🎁 Bonus Status</div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Weekly Target: 80 orders</span><span style="color:var(--green)">72/80 ✓</span></div>
-              <div class="ai-bar"><div class="ai-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--gold),var(--accent))"></div></div>
-              <div style="font-size:10px;color:var(--gold);margin-top:6px">8 more orders for HK$500 bonus! 🔥</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Complete Earnings Hub</h3>
-      <p style="color:var(--text2);line-height:1.7;margin-bottom:20px">Transparent earnings with AI-powered insights to help couriers maximize their income.</p>
-      <div class="cards-grid" style="grid-template-columns:1fr 1fr">
-        <div class="feature-card"><div class="icon icon-green">💵</div><h3>Daily Income</h3><p>Real-time earnings breakdown</p></div>
-        <div class="feature-card"><div class="icon icon-blue">📈</div><h3>Weekly/Monthly</h3><p>Trend analysis & comparisons</p></div>
-        <div class="feature-card"><div class="icon icon-gold">🎁</div><h3>Bonus System</h3><p>Performance-based rewards</p></div>
-        <div class="feature-card"><div class="icon icon-orange">📊</div><h3>Accept Rate</h3><p>Track & improve acceptance</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 11. ADMIN DASHBOARD ═══════ -->
-<div class="divider"></div>
-<section class="section" id="dashboard">
-  <div class="section-label">🏢 Admin</div>
-  <div class="section-title">11. Partner / Franchise Dashboard</div>
-  <div class="section-desc">Real-time monitoring of orders, active couriers, revenue, AI efficiency analytics, demand heatmaps, and city delivery coverage.</div>
-
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;overflow:hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
-      <div>
-        <div style="font-size:18px;font-weight:800">Kungfu Express — Control Center</div>
-        <div style="font-size:12px;color:var(--text3)">Last updated: Just now · Auto-refresh: 5s</div>
-      </div>
-      <div style="display:flex;gap:6px">
-        <span style="padding:4px 12px;border-radius:8px;background:rgba(0,200,83,.12);color:var(--green);font-size:11px;font-weight:600">● Live</span>
-        <span style="padding:4px 12px;border-radius:8px;background:var(--bg);font-size:11px;color:var(--text3)">Export CSV</span>
-      </div>
-    </div>
-
-    <div class="dash-stats">
-      <div class="dash-stat"><div class="ds-val" style="color:var(--primary)">1,247</div><div class="ds-lbl">Today's Orders</div><div class="ds-change up">↑ 12% vs yesterday</div></div>
-      <div class="dash-stat"><div class="ds-val" style="color:var(--blue)">856</div><div class="ds-lbl">Active Couriers</div><div class="ds-change up">↑ 8% online now</div></div>
-      <div class="dash-stat"><div class="ds-val" style="color:var(--green)">HK$382K</div><div class="ds-lbl">Total Revenue</div><div class="ds-change up">↑ 15% this week</div></div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div style="background:var(--bg);border-radius:14px;padding:16px">
-        <div style="font-size:12px;font-weight:700;margin-bottom:8px">🤖 AI Efficiency</div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px"><span>Route Optimization</span><span style="color:var(--green)">94%</span></div>
-        <div class="ai-bar"><div class="ai-bar-fill" style="width:94%;background:var(--green)"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin:8px 0 4px"><span>Match Accuracy</span><span style="color:var(--blue)">97%</span></div>
-        <div class="ai-bar"><div class="ai-bar-fill" style="width:97%;background:var(--blue)"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin:8px 0 4px"><span>ETA Precision</span><span style="color:var(--cyan)">91%</span></div>
-        <div class="ai-bar"><div class="ai-bar-fill" style="width:91%;background:var(--cyan)"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin:8px 0 4px"><span>Cost Reduction</span><span style="color:var(--accent)">23%</span></div>
-        <div class="ai-bar"><div class="ai-bar-fill" style="width:23%;background:var(--accent)"></div></div>
-      </div>
-      <div style="background:var(--bg);border-radius:14px;padding:16px">
-        <div style="font-size:12px;font-weight:700;margin-bottom:8px">🗺️ Delivery Heatmap</div>
-        <div class="heatmap">
-          <div class="heat-dot" style="top:20%;left:30%;width:30px;height:30px;background:rgba(230,57,70,.6);box-shadow:0 0 20px rgba(230,57,70,.4)"></div>
-          <div class="heat-dot" style="top:40%;left:55%;width:40px;height:40px;background:rgba(255,107,53,.5);box-shadow:0 0 25px rgba(255,107,53,.3)"></div>
-          <div class="heat-dot" style="top:60%;left:70%;width:25px;height:25px;background:rgba(0,200,83,.5);box-shadow:0 0 15px rgba(0,200,83,.3)"></div>
-          <div class="heat-dot" style="top:30%;left:80%;width:20px;height:20px;background:rgba(33,150,243,.5);box-shadow:0 0 15px rgba(33,150,243,.3)"></div>
-          <div class="heat-dot" style="top:70%;left:25%;width:22px;height:22px;background:rgba(156,39,176,.5);box-shadow:0 0 15px rgba(156,39,176,.3)"></div>
-          <div class="heatmap-label">Hong Kong · Kowloon · NT</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:9px;color:var(--text3)">
-          <span>🔴 TST</span><span>🟠 Central</span><span>🟢 Mongkok</span><span>🔵 Wan Chai</span><span>🟣 Sha Tin</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-      <div style="background:var(--bg);border-radius:12px;padding:14px">
-        <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Avg Delivery Time</div>
-        <div style="font-size:24px;font-weight:900;color:var(--green)">19.2 min</div>
-        <div style="font-size:10px;color:var(--green)">↓ 3.1 min from last week</div>
-      </div>
-      <div style="background:var(--bg);border-radius:12px;padding:14px">
-        <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Completion Rate</div>
-        <div style="font-size:24px;font-weight:900;color:var(--blue)">99.2%</div>
-        <div style="font-size:10px;color:var(--green)">↑ 0.3% improvement</div>
-      </div>
-      <div style="background:var(--bg);border-radius:12px;padding:14px">
-        <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Customer Satisfaction</div>
-        <div style="font-size:24px;font-weight:900;color:var(--gold)">4.92 ★</div>
-        <div style="font-size:10px;color:var(--green)">Top 1% in industry</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 12. AI PREDICTION ═══════ -->
-<div class="divider"></div>
-<section class="section" id="prediction">
-  <div class="section-label">🔮 Predict</div>
-  <div class="section-title">12. AI Prediction System</div>
-  <div class="section-desc">Machine learning models predict peak hours, order demand, courier requirements, and high-demand zones to optimize operations.</div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-    <div class="pred-card">
-      <div class="pred-title">⏰ Peak Hour Prediction</div>
-      <div class="pred-chart">
-        <div class="pred-bar" style="height:20%"></div>
-        <div class="pred-bar" style="height:15%"></div>
-        <div class="pred-bar" style="height:10%"></div>
-        <div class="pred-bar" style="height:8%"></div>
-        <div class="pred-bar" style="height:12%"></div>
-        <div class="pred-bar" style="height:25%"></div>
-        <div class="pred-bar" style="height:45%"></div>
-        <div class="pred-bar" style="height:60%"></div>
-        <div class="pred-bar" style="height:55%"></div>
-        <div class="pred-bar" style="height:70%"></div>
-        <div class="pred-bar" style="height:85%"></div>
-        <div class="pred-bar" style="height:95%"></div>
-        <div class="pred-bar" style="height:100%"></div>
-        <div class="pred-bar" style="height:90%"></div>
-        <div class="pred-bar" style="height:75%"></div>
-        <div class="pred-bar" style="height:65%"></div>
-        <div class="pred-bar" style="height:80%"></div>
-        <div class="pred-bar" style="height:90%"></div>
-        <div class="pred-bar" style="height:85%"></div>
-        <div class="pred-bar" style="height:70%"></div>
-        <div class="pred-bar" style="height:50%"></div>
-        <div class="pred-bar" style="height:35%"></div>
-        <div class="pred-bar" style="height:25%"></div>
-        <div class="pred-bar" style="height:18%"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--text3);margin-top:4px"><span>12AM</span><span>6AM</span><span>12PM</span><span>6PM</span><span>12AM</span></div>
-      <div class="pred-insight"><span class="pi-icon">📈</span> Peak predicted: 12:00–14:00 & 18:00–20:00</div>
-    </div>
-
-    <div class="pred-card">
-      <div class="pred-title">📦 Order Demand Forecast</div>
-      <div class="pred-chart">
-        <div class="pred-bar" style="height:40%"></div>
-        <div class="pred-bar" style="height:55%"></div>
-        <div class="pred-bar" style="height:48%"></div>
-        <div class="pred-bar" style="height:62%"></div>
-        <div class="pred-bar" style="height:78%"></div>
-        <div class="pred-bar" style="height:85%"></div>
-        <div class="pred-bar" style="height:92%"></div>
-        <div class="pred-bar" style="height:100%"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--text3);margin-top:4px"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-      <div class="pred-insight"><span class="pi-icon">🎯</span> Sunday highest demand day — recommend +30% couriers</div>
-    </div>
-
-    <div class="pred-card">
-      <div class="pred-title">🛵 Courier Demand Prediction</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
-        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--primary)">320</div><div style="font-size:9px;color:var(--text3)">Needed (Peak)</div></div>
-        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--green)">245</div><div style="font-size:9px;color:var(--text3)">Currently Online</div></div>
-        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--accent)">75</div><div style="font-size:9px;color:var(--text3)">Shortage</div></div>
-      </div>
-      <div class="pred-insight"><span class="pi-icon">⚠️</span> Predict courier shortage 12:00–14:00 — send push alerts</div>
-    </div>
-
-    <div class="pred-card">
-      <div class="pred-title">🔥 Hot Zone Analysis</div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:8px"><span style="font-size:12px">🏙️ Central</span><span style="font-size:12px;font-weight:700;color:var(--primary)">🔥 Very High</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:8px"><span style="font-size:12px">🌃 Tsim Sha Tsui</span><span style="font-size:12px;font-weight:700;color:var(--accent)">🔥 High</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:8px"><span style="font-size:12px">🏮 Mongkok</span><span style="font-size:12px;font-weight:700;color:var(--gold)">📊 Medium</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:8px"><span style="font-size:12px">🏖️ Wan Chai</span><span style="font-size:12px;font-weight:700;color:var(--blue)">📊 Medium</span></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:8px"><span style="font-size:12px">🏡 Sha Tin</span><span style="font-size:12px;font-weight:700;color:var(--green)">📉 Low</span></div>
-      </div>
-      <div class="pred-insight"><span class="pi-icon">💡</span> Deploy 15 extra couriers to Central before noon</div>
-    </div>
-  </div>
-
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:24px">
-    <h3 style="font-size:16px;font-weight:800;margin-bottom:16px">🎯 Business Impact Summary</h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)">↓ 34%</div><div style="font-size:12px;color:var(--text2);margin-top:4px">Reduced Empty Runs</div></div>
-      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--blue)">↑ 28%</div><div style="font-size:12px;color:var(--text2);margin-top:4px">Increased Accept Rate</div></div>
-      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)">↑ 41%</div><div style="font-size:12px;color:var(--text2);margin-top:4px">Platform Profit Growth</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ DEMO FLOW ═══════ -->
-<div class="divider"></div>
-<section class="section" id="flow">
-  <div class="section-label">🎬 Demo</div>
-  <div class="section-title">Demo Flow — Full Journey</div>
-  <div class="section-desc">Experience the complete Kungfu Express workflow from order creation to delivery completion and admin oversight.</div>
-
-  <div class="flow-container">
-    <div class="flow-step active" data-step="1">
-      <div class="flow-num">1</div>
-      <div class="flow-content">
-        <h3>🎬 Opening</h3>
-        <p>Kungfu Express Logo — "AI Powered Smart Delivery Platform"</p>
-        <div class="flow-tag" style="background:var(--primary-glow);color:var(--primary)">Brand Intro</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="2">
-      <div class="flow-num">2</div>
-      <div class="flow-content">
-        <h3>📦 Create Order</h3>
-        <p>User enters pickup & delivery addresses, selects delivery type, AI calculates cost instantly.</p>
-        <div class="flow-tag" style="background:rgba(33,150,243,.15);color:var(--blue)">AI Address Fill</div>
-        <div class="flow-tag" style="background:rgba(0,200,83,.15);color:var(--green)">Instant Pricing</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="3">
-      <div class="flow-num">3</div>
-      <div class="flow-content">
-        <h3>🧠 AI Analysis</h3>
-        <p>System analyzes GPS, traffic, weather, and calculates optimal delivery plan.</p>
-        <div class="flow-tag" style="background:rgba(156,39,176,.15);color:var(--purple)">14 Data Points</div>
-        <div class="flow-tag" style="background:rgba(0,188,212,.15);color:var(--cyan)">Real-Time</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="4">
-      <div class="flow-num">4</div>
-      <div class="flow-content">
-        <h3>🛵 Courier Match</h3>
-        <p>AI selects best courier — Alex Wong, 1.2km away, ⭐ 4.9, 98% acceptance rate.</p>
-        <div class="flow-tag" style="background:rgba(255,215,0,.15);color:var(--gold)">5-Second Match</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="5">
-      <div class="flow-num">5</div>
-      <div class="flow-content">
-        <h3>📲 Courier Accepts</h3>
-        <p>Push notification → Order details → Income preview → Accept & navigate.</p>
-        <div class="flow-tag" style="background:rgba(0,200,83,.15);color:var(--green)">One-Tap Accept</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="6">
-      <div class="flow-num">6</div>
-      <div class="flow-content">
-        <h3>🗺️ AI Route Optimization</h3>
-        <p>AI reroutes from 35min → 22min, saving 13 min and 18% fuel.</p>
-        <div class="flow-tag" style="background:rgba(255,107,53,.15);color:var(--accent)">-13 min</div>
-        <div class="flow-tag" style="background:rgba(0,200,83,.15);color:var(--green)">-18% fuel</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="7">
-      <div class="flow-num">7</div>
-      <div class="flow-content">
-        <h3>📍 Live Tracking</h3>
-        <p>Real-time map with courier position, speed, ETA, and 7-stage status timeline.</p>
-        <div class="flow-tag" style="background:rgba(230,57,70,.15);color:var(--primary)">GPS Live</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="8">
-      <div class="flow-num">8</div>
-      <div class="flow-content">
-        <h3>✍️ E-Signature</h3>
-        <p>Handwritten signature, QR code, OTP, or face recognition to confirm delivery.</p>
-        <div class="flow-tag" style="background:rgba(156,39,176,.15);color:var(--purple)">Secure POD</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="9">
-      <div class="flow-num">9</div>
-      <div class="flow-content">
-        <h3>⭐ Five-Star Rating</h3>
-        <p>Customer rates courier with stars, quick tags, text review, and photo upload.</p>
-        <div class="flow-tag" style="background:rgba(255,215,0,.15);color:var(--gold)">Quality Loop</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="10">
-      <div class="flow-num">10</div>
-      <div class="flow-content">
-        <h3>📊 Admin Dashboard</h3>
-        <p>Real-time orders, revenue, AI efficiency analytics, heatmap, and courier metrics.</p>
-        <div class="flow-tag" style="background:rgba(33,150,243,.15);color:var(--blue)">Control Center</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="11">
-      <div class="flow-num">11</div>
-      <div class="flow-content">
-        <h3>🔮 AI Predictions</h3>
-        <p>Peak hours, demand forecasting, courier planning, and hot zone analysis.</p>
-        <div class="flow-tag" style="background:rgba(156,39,176,.15);color:var(--purple)">ML Models</div>
-        <div class="flow-tag" style="background:rgba(0,200,83,.15);color:var(--green)">+41% Profit</div>
-      </div>
-    </div>
-    <div class="flow-step" data-step="12">
-      <div class="flow-num">12</div>
-      <div class="flow-content">
-        <h3>🏁 Closing</h3>
-        <p>"Kungfu Express — Fast · Smart · AI Driven Delivery — Delivering the Future of Logistics"</p>
-        <div class="flow-tag" style="background:var(--primary-glow);color:var(--primary)">Brand Outro</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ FOOTER ═══════ -->
-<footer class="footer">
-  <h2><span class="red">Kungfu</span> Express</h2>
-  <p>Fast · Smart · AI Driven Delivery — Delivering the Future of Logistics</p>
-  <div class="footer-links">
-    <a href="#">About</a>
-    <a href="#">Careers</a>
-    <a href="#">Partner With Us</a>
-    <a href="#">API Docs</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-  </div>
-  <div style="margin-top:20px;font-size:12px;color:var(--text3)">© 2026 Kungfu Express. All rights reserved.</div>
-</footer>
-
-<!-- ═══════ DEMO OVERLAY ═══════ -->
-<div class="demo-overlay" id="demoOverlay">
-  <div class="demo-screen">
-    <button class="demo-close" onclick="closeDemo()">✕</button>
-    <div class="demo-progress" id="demoProgress"></div>
-    <div class="demo-step-content" id="demoContent"></div>
-    <div class="demo-nav">
-      <button class="demo-prev" id="demoPrev" onclick="demoNav(-1)">← Back</button>
-      <button class="demo-next" id="demoNext" onclick="demoNav(1)">Next →</button>
-    </div>
-  </div>
-</div>
+<div id="toast"></div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
 
 <script>
-// ═══════ MOBILE NAV ═══════
-function toggleMobile(){
-  document.getElementById('mobileDrawer').classList.toggle('open');
+/* ═══════════════════ DATA & STATE ═══════════════════ */
+const TYPES={
+  doc:{label:'Document',icon:'📄',base:26,km:5.5},
+  pkg:{label:'Package',icon:'📦',base:35,km:7},
+  food:{label:'Fresh Food',icon:'🥬',base:40,km:8},
+  cold:{label:'Cold Chain',icon:'🧊',base:52,km:10}
+};
+const ADDRESSES=['123 Nathan Road, Tsim Sha Tsui','88 Queen\u2019s Road, Central','15 Harbour Road, Wan Chai','45 Mong Kok Road, Kowloon','210 Festival Walk, Kowloon Tong'];
+const COURIERS={
+  alex:{name:'Alex Wong',rating:4.9,dist:1.2,acc:98,load:2,cap:5,veh:'Motorbike',icon:'🛵'},
+  sarah:{name:'Sarah Li',rating:4.7,dist:2.8,acc:95,load:4,cap:8,veh:'Van',icon:'🚗'},
+  mike:{name:'Mike Chen',rating:4.8,dist:3.5,acc:96,load:1,cap:5,veh:'Motorbike',icon:'🛵'}
+};
+const ORDER_STATUS_POINTS=['Order Created','Courier Assigned','Heading to Pickup','Package Picked Up','In Transit','Out for Delivery','Delivered'];
+let ROLE='customer';
+let TAB='home';
+let order={
+  pickup:'123 Nathan Road, Tsim Sha Tsui',
+  delivery:'88 Queen\u2019s Road, Central',
+  type:'pkg', pay:'card', qty:1,
+  id:'KE-28451', courier:COURIERS.alex,
+  status:0, paid:false, created:false,
+  fare:58, createdMin:0
+};
+let state={adminOrders:1247,adminCouriers:856,adminRev:382000,orders:[],earnings:{today:1280,month:32400,week:7850,orders:18,accRate:98,ordersTarget:72,targetMax:80}};
+
+/* ═══════════════════ ROUTING / ROLE ═══════════════════ */
+const NAV={
+  customer:[
+    {k:'home',i:'🏠',l:'Home'}, {k:'new',i:'📦',l:'Order'}, {k:'track',i:'📍',l:'Track'}, {k:'profile',i:'👤',l:'Profile'}
+  ],
+  courier:[
+    {k:'overview',i:'🛵',l:'Overview'}, {k:'jobs',i:'📬',l:'Jobs'}, {k:'earn',i:'💰',l:'Earnings'}
+  ],
+  admin:[
+    {k:'dash',i:'📊',l:'Dashboard'}, {k:'ai',i:'🔮',l:'AI Predict'}, {k:'ops',i:'🗺️',l:'Coverage'}
+  ]
+};
+
+function setRole(r){
+  ROLE=r;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role===r));
+  TAB=NAV[r][0].k;
+  render();
+}
+function renderNav(){
+  const nav=document.getElementById('bottomNav');
+  nav.innerHTML=NAV[ROLE].map(n=>
+    `<button class="nav-item ${n.k===TAB?'active':''}" onclick="TAB='${n.k}';render()">
+       <span class="ni-icon">${n.i}</span>${n.l}
+     </button>`).join('');
+}
+function render(){
+  renderNav();
+  const c=document.getElementById('content');
+  const screens={
+    customer:{home:homeScreen,new:newOrderScreen,track:trackScreen,profile:profileScreen,sign:signScreen,rating:ratingScreen,chat:chatScreen},
+    courier:{overview:courierOverview,jobs:courierJobs,earn:earningsScreen},
+    admin:{dash:adminDash,ai:aiPredict,ops:opsScreen}
+  };
+  c.innerHTML=ROLE==='customer'
+    ? screens.customer[TAB]()
+    : ROLE==='courier'
+      ? screens.courier[TAB]()
+      : screens.admin[TAB]();
+  c.scrollTop=0;
+  afterRender();
+}
+function afterRender(){
+  if(TAB==='new') bindOrderForm();
+  if(TAB==='track'&&order.created) animateCourier();
+  if(TAB==='chat') bindChat();
+  if(TAB==='sign') initSigCanvas();
 }
 
-// ═══════ SCROLL ANIMATIONS ═══════
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.1});
-document.querySelectorAll('.feature-card,.phone-mockup,.pred-card,.flow-step').forEach(el=>{
-  el.classList.add('fade-in');
-  observer.observe(el);
-});
-
-// ═══════ NAV HIGHLIGHT ═══════
-const navLinks=document.querySelectorAll('#mainNav a');
-const sections=document.querySelectorAll('section[id]');
-window.addEventListener('scroll',()=>{
-  let current='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.id});
-  navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+current)});
-});
-
-// ═══════ FLOW STEP ANIMATION ═══════
-const flowSteps=document.querySelectorAll('.flow-step');
-const flowObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')});
-},{threshold:.5});
-flowSteps.forEach(s=>flowObs.observe(s));
-
-// ═══════ DEMO MODE ═══════
-let demoStep=0;
-const demoSteps=[
-  {title:'🎬 Kungfu Express',sub:'AI Powered Smart Delivery Platform',html:'<div style="text-align:center;padding:30px 0"><div style="font-size:60px;margin-bottom:12px">🥋</div><div style="font-size:24px;font-weight:900"><span style="color:var(--primary)">Kungfu</span> Express</div><div style="font-size:14px;color:var(--text2);margin-top:8px">AI Powered Smart Delivery Platform</div><div style="margin-top:20px;padding:12px;background:var(--card);border-radius:10px;font-size:12px;color:var(--text3)">The Future of Logistics Starts Here</div></div>'},
-  {title:'📦 Step 1: Create Order',sub:'User builds a new delivery order',html:'<div class="input-group"><label>Pickup</label><div class="input-field" style="font-size:12px">123 Nathan Road, TST</div></div><div class="input-group"><label>Delivery</label><div class="input-field" style="font-size:12px">88 Queen\'s Road, Central</div></div><div class="delivery-types"><div class="dtype active"><div class="dt-icon">📄</div><div class="dt-label">Document</div></div><div class="dtype"><div class="dt-icon">📦</div><div class="dt-label">Package</div></div></div><div class="cost-summary"><div class="cost-row total"><span>Total</span><span>HK$58</span></div></div>'},
-  {title:'🧠 Step 2: AI Analysis',sub:'System processes 14 real-time data points',html:'<div class="ai-panel"><div class="ai-panel-title">⚡ AI Computation</div><div class="ai-metrics"><div class="ai-metric"><div class="val" style="color:var(--green)">3 min</div><div class="lbl">Pickup ETA</div></div><div class="ai-metric"><div class="val" style="color:var(--blue)">18 min</div><div class="lbl">Delivery ETA</div></div><div class="ai-metric"><div class="val" style="color:var(--accent)">2.1 km</div><div class="lbl">Nearest Courier</div></div><div class="ai-metric"><div class="val" style="color:var(--cyan)">22°C</div><div class="lbl">Weather</div></div></div></div><div style="text-align:center;padding:12px;background:var(--card);border-radius:10px;font-size:12px"><span style="color:var(--green);font-weight:700">Optimization Score: 96/100</span></div>'},
-  {title:'🛵 Step 3: Courier Match',sub:'AI finds best courier in under 5 seconds',html:'<div class="courier-card" style="border:1px solid var(--green)"><div class="courier-avatar">A</div><div class="courier-info"><div class="courier-name">Alex Wong ⭐ 4.9</div><div class="courier-meta"><span>📍 1.2km</span><span>🛵 Motorbike</span></div><div style="font-size:10px;color:var(--green);margin-top:4px">Acceptance Rate: 98%</div></div><div class="courier-badge">Matched ✓</div></div><div style="text-align:center;margin:12px 0;font-size:11px;color:var(--text3)">Analyzing: GPS · Rating · Load · Vehicle · Status</div>'},
-  {title:'📲 Step 4: Courier Accepts',sub:'Push notification with full order details',html:'<div style="text-align:center;font-size:36px;margin-bottom:12px">📦</div><div style="display:flex;gap:8px;margin-bottom:12px"><div style="flex:1;background:var(--card);border-radius:8px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--green)">HK$58</div><div style="font-size:9px;color:var(--text3)">Income</div></div><div style="flex:1;background:var(--card);border-radius:8px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--blue)">4.2 km</div><div style="font-size:9px;color:var(--text3)">Distance</div></div><div style="flex:1;background:var(--card);border-radius:8px;padding:10px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--accent)">21 min</div><div style="font-size:9px;color:var(--text3)">Est. Time</div></div></div><div style="display:flex;gap:8px"><button style="flex:1;padding:10px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:12px">Decline</button><button style="flex:2;padding:10px;border-radius:8px;background:var(--green);border:none;color:#fff;font-size:12px;font-weight:700">Accept ✓</button></div>'},
-  {title:'🗺️ Step 5: AI Route Optimization',sub:'35 min → 22 min — Save 13 minutes',html:'<div class="route-compare"><div class="route-box original"><div class="route-label">Original</div><div class="route-time" style="color:var(--text3)">35 min</div></div><div class="route-box optimized"><div class="route-label">AI Route</div><div class="route-time" style="color:var(--green)">22 min</div><div class="route-save">↓ 13 min saved</div></div></div><div class="route-tags"><div class="route-tag">⛽ -18% fuel</div><div class="route-tag">🌧️ Rain factored</div><div class="route-tag">🌉 Tolls avoided</div></div>'},
-  {title:'📍 Step 6: Live Tracking',sub:'Real-time map with 7-stage status',html:'<div style="text-align:center;margin-bottom:10px"><div style="font-size:28px;font-weight:900;color:var(--green)">12 min</div><div style="font-size:10px;color:var(--text3)">Remaining</div></div><div class="map-container" style="height:120px"><div class="map-grid"></div><div class="map-pin" style="top:70%;left:20%">📍</div><div class="map-pin" style="top:15%;left:80%">🏁</div><div class="map-dot" style="top:40%;left:50%;background:var(--green)"></div></div><div style="font-size:11px;padding:8px;background:rgba(230,57,70,.08);border-radius:8px;text-align:center;color:var(--primary);font-weight:600">🛵 In Transit — Stage 5/7</div>'},
-  {title:'✍️ Step 7: E-Signature',sub:'Secure proof of delivery',html:'<div style="text-align:center;margin-bottom:12px"><div style="font-size:36px">✅</div><div style="font-size:13px;font-weight:700">Package Arrived!</div></div><div class="sig-options"><div class="sig-opt active"><div class="sig-icon">✍️</div><div class="sig-label">Signature</div></div><div class="sig-opt"><div class="sig-icon">📱</div><div class="sig-label">QR Code</div></div><div class="sig-opt"><div class="sig-icon">🔢</div><div class="sig-label">OTP</div></div></div><div class="sig-box"><span style="font-size:12px">✍️ Sign here...</span></div>'},
-  {title:'⭐ Step 8: Five-Star Rating',sub:'Customer feedback loop',html:'<div style="text-align:center"><div style="font-size:36px;margin-bottom:8px">🎉</div><div style="font-size:13px;font-weight:700">Delivery Complete!</div></div><div class="stars"><span class="star active">★</span><span class="star active">★</span><span class="star active">★</span><span class="star active">★</span><span class="star active">★</span></div><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0"><span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px">😊 Friendly</span><span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px">⚡ Fast</span><span style="padding:4px 10px;border-radius:8px;background:var(--card);font-size:10px">📦 Careful</span></div>'},
-  {title:'📊 Step 9: Admin Dashboard',sub:'Real-time operations control center',html:'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px"><div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--primary)">1,247</div><div style="font-size:8px;color:var(--text3)">Orders</div></div><div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--blue)">856</div><div style="font-size:8px;color:var(--text3)">Couriers</div></div><div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--green)">HK$382K</div><div style="font-size:8px;color:var(--text3)">Revenue</div></div></div><div style="background:var(--bg);border-radius:8px;padding:8px"><div style="font-size:10px;font-weight:600;margin-bottom:6px">AI Efficiency</div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text2);margin-bottom:2px"><span>Route Optimization</span><span style="color:var(--green)">94%</span></div><div class="ai-bar"><div class="ai-bar-fill" style="width:94%;background:var(--green)"></div></div></div>'},
-  {title:'🔮 Step 10: AI Predictions',sub:'Machine learning insights for business growth',html:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px"><div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:800;color:var(--green)">↓ 34%</div><div style="font-size:9px;color:var(--text3)">Empty Runs</div></div><div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px;font-weight:800;color:var(--blue)">↑ 28%</div><div style="font-size:9px;color:var(--text3)">Accept Rate</div></div><div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;grid-column:span 2"><div style="font-size:22px;font-weight:800;color:var(--gold)">↑ 41%</div><div style="font-size:9px;color:var(--text3)">Platform Profit Growth</div></div></div><div style="padding:8px;background:var(--card);border-radius:8px;font-size:10px;color:var(--text2);text-align:center">Peak: 12:00–14:00 & 18:00–20:00</div>'},
-  {title:'🏁 Kungfu Express',sub:'Delivering the Future of Logistics',html:'<div style="text-align:center;padding:30px 0"><div style="font-size:48px;margin-bottom:12px">🥋</div><div style="font-size:22px;font-weight:900"><span style="color:var(--primary)">Kungfu</span> Express</div><div style="font-size:14px;color:var(--text2);margin:12px 0">Fast · Smart · AI Driven Delivery</div><div style="padding:12px;background:var(--card);border-radius:10px;font-size:12px;color:var(--accent);font-weight:600">Delivering the Future of Logistics</div><div style="margin-top:20px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="padding:4px 10px;border-radius:6px;background:rgba(230,57,70,.1);font-size:10px;color:var(--primary)">AI Routing</span><span style="padding:4px 10px;border-radius:6px;background:rgba(0,200,83,.1);font-size:10px;color:var(--green)">Live Tracking</span><span style="padding:4px 10px;border-radius:6px;background:rgba(33,150,243,.1);font-size:10px;color:var(--blue)">Smart Match</span><span style="padding:4px 10px;border-radius:6px;background:rgba(255,215,0,.1);font-size:10px;color:var(--gold)">Predictions</span></div></div>'}
-];
-
-function openDemo(){
-  demoStep=0;
-  renderDemo();
-  document.getElementById('demoOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeDemo(){
-  document.getElementById('demoOverlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-function renderDemo(){
-  const s=demoSteps[demoStep];
-  document.getElementById('demoContent').innerHTML=`<h3>${s.title}</h3><div class="demo-sub">${s.sub}</div>${s.html}`;
-  let prog='';
-  for(let i=0;i<demoSteps.length;i++){
-    let cls=i<demoStep?'done':i===demoStep?'current':'';
-    prog+=`<div class="dp ${cls}"></div>`;
-  }
-  document.getElementById('demoProgress').innerHTML=prog;
-  document.getElementById('demoPrev').style.display=demoStep===0?'none':'block';
-  document.getElementById('demoNext').textContent=demoStep===demoSteps.length-1?'✕ Close':'Next →';
-}
-function demoNav(dir){
-  if(dir===1&&demoStep===demoSteps.length-1){closeDemo();return}
-  demoStep=Math.max(0,Math.min(demoSteps.length-1,demoStep+dir));
-  renderDemo();
+/* ═══════════════════ CUSTOMER SCREENS ═══════════════════ */
+function homeScreen(){
+  return `
+  <div class="anim">
+    <div style="background:linear-gradient(135deg,rgba(230,57,70,.15),rgba(255,107,53,.12));border-radius:18px;padding:22px;margin-bottom:16px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">⚡ AI-Powered Delivery</div>
+      <div style="font-size:22px;font-weight:900;margin-bottom:8px">Fast. Smart. AI-Driven.</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Real-time pricing, smart routing, and 5-second courier matching.</div>
+      <button class="btn-primary" onclick="TAB='new';render()">📦 Create New Order</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <button class="card" style="text-align:left;cursor:pointer;border:none;color:var(--text)" onclick="quickOrder()">
+        <div style="font-size:24px;margin-bottom:6px">⚡</div><div style="font-weight:800;font-size:14px">Quick Reorder</div>
+        <div style="font-size:11px;color:var(--text3)">Tap to reuse last order</div>
+      </button>
+      <button class="card" style="text-align:left;cursor:pointer;border:none;color:var(--text)" onclick="TAB='track';render()">
+        <div style="font-size:24px;margin-bottom:6px">📍</div><div style="font-weight:800;font-size:14px">Track Order</div>
+        <div style="font-size:11px;color:var(--text3)">${order.created?'Live now':'No active order'}</div>
+      </button>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="h3">🥋 About Kungfu Express</div>
+      <div style="font-size:12.5px;color:var(--text2);line-height:1.7">A complete AI smart-delivery ecosystem: intelligent dispatch, live tracking, AI customer service, and real-time analytics — beyond just order-deliver-complete.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      ${[['🛰️','AI Routing'],['⏱️','5s Match'],['🛡️','E-Sign']].map(x=>`<div class="card" style="text-align:center;padding:13px"><div style="font-size:20px">${x[0]}</div><div style="font-size:10px;color:var(--text2);margin-top:4px">${x[1]}</div></div>`).join('')}
+    </div>
+  </div>`;
 }
 
-// Keyboard demo nav
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('demoOverlay').classList.contains('open'))return;
-  if(e.key==='ArrowRight')demoNav(1);
-  if(e.key==='ArrowLeft')demoNav(-1);
-  if(e.key==='Escape')closeDemo();
-});
-
-// Close overlay on background click
-document.getElementById('demoOverlay').addEventListener('click',e=>{
-  if(e.target===e.currentTarget)closeDemo();
-});
-
-// ═══════ PWA INSTALL PROMPT ═══════
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt',(e)=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  showInstallBanner();
-});
-function showInstallBanner(){
-  let b=document.getElementById('installBanner');
-  if(!b){
-    b=document.createElement('div');
-    b.id='installBanner';
-    b.style.cssText='position:fixed;bottom:16px;left:16px;right:16px;z-index:3000;max-width:400px;margin:0 auto;background:#1a1a28;border:1px solid #e63946;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.6);animation:fadeUp .4s ease';
-    b.innerHTML='<div style="font-size:28px">🥋</div><div style="flex:1"><div style="font-size:13px;font-weight:700">Install Kungfu Express</div><div style="font-size:11px;color:#8888aa">Add to home screen & open like an app</div></div><button id="installBtn" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#e63946,#ff6b35);border:none;color:#fff;font-weight:700;font-size:12px;cursor:pointer">Install</button><button id="installDismiss" style="background:none;border:none;color:#8888aa;font-size:16px;cursor:pointer;padding:0 4px">✕</button>';
-    document.body.appendChild(b);
-    document.getElementById('installBtn').addEventListener('click',async()=>{
-      if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;}
-      b.remove();
-    });
-    document.getElementById('installDismiss').addEventListener('click',()=>b.remove());
-  }
+function quickOrder(){
+  order.paid=false;order.created=false;order.status=0;order.pickup='123 Nathan Road, Tsim Sha Tsui';order.delivery='88 Queen\u2019s Road, Central';order.type='pkg';order.fare=58;
+  toast('⚡ Reusing last order — ready to go');
+  TAB='new';render();
 }
 
-// ═══════ SERVICE WORKER ═══════
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js').catch(()=>{});
-  });
+function newOrderScreen(){
+  order.created=false; // reset for fresh entry
+  order.status=0;order.paid=false;order.courier=COURIERS.alex;
+  return `
+  <div class="anim">
+    <div class="section-label">📦 Create Order</div>
+    <div class="h2">New Delivery</div>
+    <div class="sub">AI fills your address and computes the best price instantly</div>
+
+    <div class="order-tabs">
+      <button class="order-tab active" onclick="toast('Instant delivery mode')">⚡ Instant</button>
+      <button class="order-tab" onclick="toast('Scheduled pickup mode')">📅 Scheduled</button>
+      <button class="order-tab" onclick="toast('Multi-stop mode')">📍 Multi-stop</button>
+    </div>
+
+    <div class="addr-box">
+      <button class="swap-btn" onclick="swapAddresses()">⇅</button>
+      <div class="addr-col">
+        <div class="addr-icons">
+          <div class="pin a">📍</div><div class="line"></div><div class="pin b">🏁</div>
+        </div>
+        <div class="addr-fields">
+          <div>
+            <div class="addr-label">Pickup Address</div>
+            <input class="input" id="pickupIn" value="${order.pickup}" oninput="onAddressInput('pickup')" onfocus="onAddressInput('pickup')">
+            <div id="suggA"></div>
+          </div>
+          <div>
+            <div class="addr-label">Delivery Address</div>
+            <input class="input" id="deliveryIn" value="${order.delivery}" oninput="onAddressInput('delivery')" onfocus="onAddressInput('delivery')">
+            <div id="suggB"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px">Delivery Type</div>
+    <div class="delivery-types" id="dtypes">
+      ${Object.entries(TYPES).map(([k,t])=>`
+        <div class="dtype ${order.type===k?'active':''}" onclick="setType('${k}')" id="dt-${k}">
+          <div class="dt-ic">${t.icon}</div><div class="dt-lb">${t.label}</div><div class="dt-fee">from HK$${t.base}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="cost-box" id="costBox">
+      <div class="cost-row"><span>Base Fee</span><span id="cBase">HK$${costBase()}</span></div>
+      <div class="cost-row"><span>Distance (4.2km)</span><span id="cDist">HK$${costDist()}</span></div>
+      <div class="cost-row"><span>AI Discount</span><span style="color:var(--green)">-HK$5</span></div>
+      <div class="cost-row grand"><span>Total</span><span id="cTotal">HK$${costTotal()}</span></div>
+    </div>
+
+    <div class="pay-options">
+      <div class="pay-op active" onclick="setPay('card')">💳 Card</div>
+      <div class="pay-op" onclick="setPay('wallet')">👛 Wallet</div>
+      <div class="pay-op" onclick="setPay('cash')">💵 Cash</div>
+    </div>
+
+    <button class="btn-primary" id="payBtn" onclick="confirmOrder()">💳 Confirm & Pay HK$${costTotal()}</button>
+  </div>`;
 }
+
+function costBase(){return TYPES[order.type].base}
+function costDist(){return Math.round(TYPES[order.type].km*4.2)}
+function costTotal(){return costBase()+costDist()-5}
+
+function setType(k){
+  order.type=k;
+  bindOrderForm();
+  document.querySelectorAll('.dtype').forEach((d,i)=>d.classList.toggle('active',Object.keys(TYPES)[i]===k));
+  document.getElementById('cBase').textContent='HK$'+costBase();
+  document.getElementById('cDist').textContent='HK$'+costDist();
+  document.getElementById('cTotal').textContent='HK$'+costTotal();
+  document.getElementById('payBtn').textContent='💳 Confirm & Pay HK$'+costTotal();
+}
+function setPay(p){order.pay=p;document.querySelectorAll('.pay-op').forEach(o=>o.classList.toggle('active',o.textContent[0]===({card:'💳',wallet:'👛',cash:'💵'})[p]))}
+function swapAddresses(){
+  const t=order.pickup;order.pickup=order.delivery;order.delivery=t;
+  bindOrderForm();
+  toast('⇅ Addresses swapped');
+}
+function onAddressInput(field){
+  const q=(document.getElementById(field==='pickup'?'pickupIn':'deliveryIn')||{}).value||'';
+  const box=document.getElementById(field==='pickup'?'suggA':'suggB');
+  if(!q){box.innerHTML='';return}
+  const matches=ADDRESSES.filter(a=>a.toLowerCase().includes(q.toLowerCase())).slice(0,3);
+  box.innerHTML=matches.map(m=>`<div class="addr-suggest" onclick="pickAddr('${field}','${m.replace(/'/g,"\\'")}')">📍 AI Suggestion</div><div class="addr-suggest" onclick="pickAddr('${field}','${m.replace(/'/g,"\\'")}')" style="min-height:0;padding:6px 12px;background:transparent;border:none;color:var(--text)">${m}</div>`).join('');
+  if(!matches.length) box.innerHTML='<div style="font-size:11px;color:var(--text3);padding:4px 2px">🤖 No match — type full address</div>';
+}
+function pickAddr(field,addr){
+  if(field==='pickup')order.pickup=addr;else order.delivery=addr;
+  bindOrderForm();
+}
+function bindOrderForm(){
+  const p=document.getElementById('pickupIn'),d=document.getElementById('deliveryIn');
+  if(p)p.value=order.pickup;if(d)d.value=order.delivery;
+}
+
+function confirmOrder(){
+  if(!order.pickup||!order.delivery){toast('⚠️ Please fill both addresses');return}
+  if(order.pickup===order.delivery){toast('⚠️ Pickup and delivery are the same');return}
+  order.fare=costTotal();
+  order.id='KE-'+(28450+Math.floor(Math.random()*999));
+  order.created=Math.floor(Date.now()/1000);
+  order.courier=COURIERS.alex;
+  order.status=0;order.paid=true;order.created=true;
+  showModal(`
+    <div style="text-align:center;padding:10px 0">
+      <div style="font-size:48px;margin-bottom:10px;animation:popIn .4s ease">✅</div>
+      <div class="h2" style="margin-bottom:4px">Order Created!</div>
+      <div class="sub" style="margin-bottom:16px">Order <b style="color:var(--primary)">${order.id}</b></div>
+      <div class="card" style="text-align:left;margin-bottom:16px">
+        <div class="cost-row"><span>Pickup</span><span style="text-align:right">${order.pickup}</span></div>
+        <div class="cost-row"><span>Delivery</span><span style="text-align:right">${order.delivery}</span></div>
+        <div class="cost-row"><span>Type</span><span>${TYPES[order.type].icon} ${TYPES[order.type].label}</span></div>
+        <div class="cost-row grand"><span>Paid</span><span>HK$${order.fare}</span></div>
+      </div>
+      <button class="btn-primary" onclick="closeModal();showAI()">🧠 Run AI Analysis →</button>
+    </div>`);
+  closeModal();
+  showAI();
+}
+
+/* AI ANALYSIS → MATCH → ACCEPTETD */
+function showAI(){
+  const c=document.getElementById('content');
+  c.innerHTML=`
+  <div class="anim">
+    <div class="section-label">🧠 AI Engine</div>
+    <div class="h2">Analyzing Your Order</div>
+    <div class="sub">Order ${order.id} · Computing optimal delivery plan</div>
+    <div class="ai-scan">
+      <div class="ai-scan-title">🤖 AI Computation in Progress</div>
+      <div class="scan-line"><div class="fill"></div></div>
+      <div style="font-size:11px;color:var(--text3)" id="scanMsg">Checking nearest couriers...</div>
+    </div>
+    <div class="ai-metrics" id="aiMetrics"></div>
+    <div class="card" style="text-align:center">
+      <div class="h3">Optimization Score</div>
+      <div class="score-ring"><div class="score-big" id="scoreVal">0</div></div>
+      <div class="prog"><div class="fill" id="scoreBar" style="width:0;background:linear-gradient(90deg,var(--green),var(--cyan))"></div></div>
+      <div style="font-size:11px;color:var(--text3)" id="scoreTxt"></div>
+    </div>
+    <button class="btn-ghost" style="margin-top:16px;display:none" id="aiNext" onclick="showMatch()">Match Best Courier →</button>
+  </div>`;
+  const metrics=[
+    ['Pickup ETA',Math.floor(Math.random()*3+2),'min','var(--green)'],
+    ['Delivery ETA',Math.floor(Math.random()*9+16),'min','var(--blue)'],
+    ['Nearest Courier','1.2','km','var(--accent)'],
+    ['Weather','22','°C','var(--cyan)']
+  ];
+  const msgs=['Checking nearest couriers...','Analyzing live traffic...','Factoring weather & road data...','Computing fuel & cost optimal route...','Building optimized delivery plan...'];
+  let i=0;
+  const int=setInterval(()=>{
+    i++;
+    if(i<5){
+      document.getElementById('scanMsg').textContent=msgs[i];
+      // reveal metrics progressively
+      const box=document.getElementById('aiMetrics');
+      box.innerHTML=metrics.slice(0,Math.min(i+1,4)).map(m=>`<div class="ai-metric" style="animation-delay:.${i}s"><div class="mv" style="color:${m[3]}">${m[1]} ${m[2]}</div><div class="ml">${m[0]}</div></div>`).join('');
+      const sc=Math.min(96,Math.round(i*22));
+      document.getElementById('scoreVal').textContent=sc;
+      document.getElementById('scoreBar').style.width=sc+'%';
+      document.getElementById('scoreTxt').textContent=sc>=70?'Excellent route options found':'Analyzing more routes...';
+    }else{
+      clearInterval(int);
+      document.getElementById('scanMsg').textContent='✅ Analysis complete — Score 96';
+      document.getElementById('scoreVal').textContent=96;
+      document.getElementById('scoreBar').style.width='96%';
+      document.getElementById('scoreTxt').textContent='Optimal solution found';
+      document.getElementById('aiNext').style.display='flex';
+      document.getElementById('aiNext').style.width='100%';
+      toast('🎯 AI analysis optimized your route');
+    }
+  },700);
+}
+
+function showMatch(){
+  const c=document.getElementById('content');
+  c.innerHTML=`
+  <div class="anim">
+    <div class="section-label">🛵 Smart Match</div>
+    <div class="h2">Finding Best Courier</div>
+    <div class="sub">AI matches by GPS · rating · load · vehicle · status</div>
+    <div style="text-align:center;padding:20px 0 6px">
+      <div style="font-size:44px;animation:blink 1.2s infinite">🔍</div>
+      <div style="font-size:14px;font-weight:800;margin-top:8px">Scanning 12 nearby couriers...</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">Order ${order.id}</div>
+      <div class="prog" style="margin:18px 20px"><div class="fill" style="width:100%;background:var(--primary);animation:scanBars 2.4s infinite"></div></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:10px;text-align:center">Analyzing: GPS · Rating · Load · Vehicle</div>
+    <div id="matchList"></div>
+    <button class="btn-ghost" style="margin-top:16px;display:none" id="matchNext" onclick="courierAccept()">To Courier Acceptance →</button>
+  </div>`;
+  const ranking=['alex','sarah','mike'];
+  let ri=0;
+  const list=document.getElementById('matchList');
+  const renderRank=()=>{
+    const key=ranking.slice(0,ri+1);
+    list.innerHTML=key.map((k,idx)=>{
+      const co=COURIERS[k];
+      const rankTxt=idx===0?'Best Match ✓':`#${idx+1}`;
+      const rankCls=idx===0?'background:rgba(0,200,83,.06);border-color:var(--green)':'opacity:.55';
+      return `<div class="courier-card" style="margin-bottom:10px;border:1px solid var(--border);${rankCls};${idx===0?'background:var(--card);':''}">
+        <div class="courier-av">${co.name[0]}</div>
+        <div style="flex:1">
+          <div style="font-weight:800;font-size:14px">${co.name} <span style="color:var(--gold)">⭐ ${co.rating}</span></div>
+          <div class="courier-meta"><span>📍 ${co.dist}km</span><span>${co.veh}</span><span>📦 ${co.load}/${co.cap}</span></div>
+          <div style="font-size:10px;color:var(--green);margin-top:4px">Acceptance: ${co.acc}%</div>
+        </div>
+        <div style="padding:5px 10px;border-radius:8px;font-size:11px;font-weight:700;${idx===0?'background:var(--green);color:#fff':'background:var(--bg);color:var(--text3)'}">${rankTxt}</div>
+      </div>`;
+    }).join('');
+  };
+  const rankInt=setInterval(()=>{
+    ri++;
+    renderRank();
+    if(ri>=ranking.length-1){
+      clearInterval(rankInt);
+      document.getElementById('matchNext').style.display='flex';
+      document.getElementById('matchNext').style.width='100%';
+      toast(`⭐ Matched ${COURIERS.alex.name} — 1.2km away`);
+    }
+  },1200);
+  renderRank();
+}
+
+/* ─── COURIER SIDE (auto simulated) ─── */
+function courierAccept(){
+  order.status=1;
+  ROLE='courier';TAB='overview';
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role==='courier'));
+  render();
+  toast(`📦 New order ${order.id} — HK$${order.fare} · ${order.courier.name}`);
+}
+
+function courierOverview(){
+  return `
+  <div class="anim">
+    <div class="flex-between" style="margin-bottom:14px">
+      <div><div class="h2">Courier App</div><div class="sub">Online · ${order.courier.name}</div></div>
+      <div style="display:flex;gap:6px">
+        <span class="tag" style="background:rgba(0,200,83,.15);color:var(--green)">● Online</span>
+      </div>
+    </div>
+
+    <div id="courierCardWrap">
+      <div class="card" style="border:2px solid var(--green);margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px">📦</span><b>New Order Available</b></div>
+          <span style="font-size:10px;color:var(--text3)">${order.id}</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <div class="td"><div class="tv" style="color:var(--green)">HK$${order.fare}</div><div class="tl">Income</div></div>
+          <div class="td"><div class="tv" style="color:var(--blue)">4.2 km</div><div class="tl">Distance</div></div>
+          <div class="td"><div class="tv" style="color:var(--accent)">21 min</div><div class="tl">Est. Time</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;font-size:12px;color:var(--text2)">
+          <div style="flex:1;background:var(--bg);border-radius:10px;padding:10px">📍 ${order.pickup}</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;font-size:12px;color:var(--text2)">
+          <div style="flex:1;background:var(--bg);border-radius:10px;padding:10px">🏁 ${order.delivery}</div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn-ghost" style="flex:1" onclick="courierDecline()">Decline</button>
+          <button class="btn-green" style="flex:2" onclick="acceptOrder()">✅ Accept & Navigate</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function courierDecline(){toast('❌ Order declined — moved to next courier');TAB='jobs';render()}
+function acceptOrder(){
+  order.status=2;
+  toast('✅ Order accepted — starting navigation');
+  simulateCourier();
+}
+function simulateCourier(){
+  let flow=['Heading to Pickup','Package Picked Up','In Transit','Out for Delivery','Delivered'];
+  let si=0;
+  const setStatus=(idx)=>{order.status=idx;refreshCourierCard();};
+  setStatus(2);
+  const int=setInterval(()=>{
+    si++;
+    if(si<flow.length-1){ // statuses 3,4,5
+      order.status=2+si; // 3,4,5
+      refreshCourierCard();
+    }else if(si===flow.length-1){
+      order.status=7 -1; // delivered index 6
+      clearInterval(int);
+      refreshCourierCard();
+      toast('✅ Delivery complete!');
+    }
+  },2600);
+}
+function refreshCourierCard(){
+  const wrap=document.getElementById('courierCardWrap');
+  if(!wrap)return;
+  const p=ORDER_STATUS_POINTS;
+  wrap.innerHTML=`
+    <div class="card" style="margin-bottom:14px">
+      <div class="flex-between" style="margin-bottom:10px"><div class="h3">📦 Order ${order.id}</div><span class="tag" style="background:var(--primary-glow);color:var(--primary)">${p[order.status]}</span></div>
+      <div class="map">${mapHTML(true)}</div>
+    </div>
+    <div class="stepper">
+      ${p.map((s,i)=>`
+        <div class="step ${i<order.status?'done':''} ${i===order.status?'now':''} ${i>order.status?'pending':''}">
+          <div class="sdot">${i<order.status?'✓':i===order.status?'●':''}</div>
+          <div><div class="st-title">${s}</div><div class="st-time">${i<order.status?'Completed':i===order.status?'In progress':'Pending'}</div></div>
+        </div>`).join('')}
+    </div>
+    <button class="btn-ghost" style="margin-top:14px" onclick="customerTrack()">View as Customer →</button>`;
+}
+function customerTrack(){
+  ROLE='customer';TAB='track';
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role==='customer'));
+  render();
+}
+
+/* ─── CUSTOMER TRACKING ─── */
+function trackScreen(){
+  if(!order.created){return `<div class="anim" style="text-align:center;padding:40px 0"><div style="font-size:52px;margin-bottom:14px">📍</div><div class="h2">No Active Order</div><div class="sub" style="margin-bottom:20px">Create an order to start tracking</div><button class="btn-primary" onclick="TAB='new';render()">📦 Create Order</button></div>`}
+  const p=ORDER_STATUS_POINTS;
+  const eta=order.status>=6?'Delivered':`${Math.max(2,12-order.status*2)} min`;
+  return `
+  <div class="anim">
+    <div class="flex-between" style="margin-bottom:14px"><div><div class="h2">Live Tracking</div><div class="sub">Order ${order.id}</div></div><span class="tag" style="background:${order.status>=6?'rgba(0,200,83,.15);color:var(--green)':'var(--primary-glow);color:var(--primary)'}">● ${order.status>=6?'Delivered':p[order.status]}</span></div>
+    <div class="map">${mapHTML(false)}</div>
+    <div class="tracking-dash">
+      <div class="td"><div class="tv" style="color:var(--green)">${order.status>=6?'—':Math.floor(Math.random()*15+28)}</div><div class="tl">km/h</div></div>
+      <div class="td"><div class="tv" style="color:var(--blue)">${order.status>=6?'0':Math.max(1,3-order.status*0.4).toFixed(1)}</div><div class="tl">km left</div></div>
+      <div class="td"><div class="tv">${eta}</div><div class="tl">${order.status>=6?'status':'ETD'}</div></div>
+    </div>
+    <div class="stepper">
+      ${p.map((s,i)=>`
+        <div class="step ${i<order.status?'done':''} ${i===order.status&&order.status<6?'now':''} ${i>order.status||order.status>=6?'pending':''}">
+          <div class="sdot">${i<order.status?'✓':i===order.status&&order.status<6?'●':i===6&&order.status>=6?'✓':''}</div>
+          <div><div class="st-title">${s}</div><div class="st-time">${i<order.status?'Done':i===order.status&&order.status<6?'Now':'Pending'}</div></div>
+        </div>`).join('')}
+    </div>
+    ${order.status>=6?`<button class="btn-primary" style="margin-top:16px" onclick="TAB='sign';render()">✍️ Confirm & Sign Delivery →</button>`:''}
+    <div style="margin-top:14px"><button class="btn-ghost" onclick="customerHelpChat()">🤖 Ask AI Assistant</button></div>
+  </div>`;
+}
+function mapHTML(grounded){
+  const pos=order.status>=6?{top:'15%',left:'80%'}:{top:'45%',left:'50%'};
+  return `<div class="map-grid"></div>
+    <div class="move-dot" style="top:70%;left:20%">📍</div>
+    <div class="move-dot" style="top:15%;left:80%">🏁</div>
+    <div class="map-dot" style="top:${pos.top};left:${pos.left}"></div>`;
+}
+function animateCourier(){
+  const dot=document.querySelector('.map-dot');
+  if(dot&&order.status<6){dot.style.transition='all 3s linear';dot.style.top='15%';dot.style.left='80%';}
+}
+
+function customerHelpChat(){TAB='chat';render()}
+function completeAndSign(){TAB='sign';render()}
+
+/* ─── SIGNATURE ─── */
+function signScreen(){
+  return `
+  <div class="anim">
+    <div class="section-label">✍️ E-Signature</div>
+    <div class="h2">Confirm Delivery</div>
+    <div class="sub">Order ${order.id} · Securely confirm receipt</div>
+    <div style="text-align:center;margin:6px 0 16px"><div style="font-size:44px">✅</div><div style="font-size:14px;font-weight:800;margin-top:4px">Package Arrived!</div></div>
+    <div class="sig-methods">
+      <div class="sig-method active" onclick="setSig(0,this)"><div class="sm-ic">✍️</div><div class="sm-lb">Signature</div></div>
+      <div class="sig-method" onclick="setSig(1,this);toast('📱 QR verified!')"><div class="sm-ic">📱</div><div class="sm-lb">QR Code</div></div>
+      <div class="sig-method" onclick="setSig(2,this);toast('🔢 OTP sent: 483920')"><div class="sm-ic">🔢</div><div class="sm-lb">OTP</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:600" id="sigHint">Sign below to confirm :</div>
+    <canvas id="sigCanvas"></canvas>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <div class="card" style="text-align:center;padding:10px"><div class="tl" style="font-size:10px;color:var(--text3)">Value</div><div style="font-size:15px;font-weight:800">HK$250</div></div>
+      <div class="card" style="text-align:center;padding:10px"><div style="font-size:10px;color:var(--text3)">Courier</div><div style="font-size:15px;font-weight:800">${order.courier.name}</div></div>
+    </div>
+    <button class="btn-green" onclick="confirmSigned()">Confirm Delivery ✓</button>
+  </div>`;
+}
+let sigMode=0;
+function setSig(m,el){
+  sigMode=m;
+  document.querySelectorAll('.sig-method').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sigHint').textContent=m===0?'Sign below to confirm :':m===1?'Scan QR at delivery point :':'Enter OTP code :';
+}
+function initSigCanvas(){
+  const cv=document.getElementById('sigCanvas');
+  if(!cv)return;
+  const ctx=cv.getContext&&cv.getContext('2d');
+  if(!ctx)return;
+  const dpr=window.devicePixelRatio||1;
+  cv.width=cv.offsetWidth*dpr;cv.height=cv.offsetHeight*dpr;
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle='#e63946';ctx.lineWidth=2.5;ctx.lineCap='round';
+  let drawing=false;
+  cv.onmousedown=cv.ontouchstart=e=>{drawing=true;const r=cv.getBoundingClientRect();const p=e.touches?e.touches[0]:e;ctx.beginPath();ctx.moveTo(p.clientX-r.left,p.clientY-r.top);e.preventDefault()};
+  cv.onmousemove=cv.ontouchmove=e=>{if(!drawing)return;const r=cv.getBoundingClientRect();const p=e.touches?e.touches[0]:e;ctx.lineTo(p.clientX-r.left,p.clientY-r.top);ctx.stroke();e.preventDefault()};
+  cv.onmouseup=cv.ontouchend=()=>drawing=false;
+  // auto draw a sample signature for demo
+  ctx.beginPath();ctx.moveTo(30,70);ctx.bezierCurveTo(50,20,80,110,110,60);ctx.bezierCurveTo(130,30,160,90,190,55);ctx.stroke();
+}
+function confirmSigned(){
+  showModal(`<div style="text-align:center;padding:10px">`+`<div style="font-size:52px;animation:popIn .4s ease">🎉</div><div class="h2" style="margin:8px 0">Delivered Successfully!</div><div class="sub" style="margin-bottom:16px">Tamper-proof E-signature recorded</div><button class="btn-primary" onclick="closeModal();TAB='rating';render()">⭐ Rate Your Experience →</button></div>`);
+}
+
+/* ─── RATING ─── */
+function ratingScreen(){
+  return `
+  <div class="anim">
+    <div class="section-label">⭐ Rate</div>
+    <div class="h2">How Was Your Delivery?</div>
+    <div class="sub">Order ${order.id} · ${order.courier.name}</div>
+    <div class="courier-card" style="margin-bottom:16px">
+      <div class="courier-av">${order.courier.name[0]}</div>
+      <div><div style="font-weight:800">${order.courier.name}</div><div style="font-size:11px;color:var(--text3)">Delivered in 18 min · ⭐ ${order.courier.rating}</div></div>
+    </div>
+    <div class="stars" id="starRow">${[1,2,3,4,5].map(s=>`<button class="star ${s<=5?'active':''}" onclick="rateStars(${s})">★</button>`).join('')}</div>
+    <div class="quick-tags" id="qtags">
+      ${['😊 Friendly','⚡ Fast','📦 Careful','🗺️ Great Route','🛡️ Professional','🍱 Neat'].map(t=>`<button class="qt" onclick="toggleTag(this)">${t}</button>`).join('')}
+    </div>
+    <div style="margin-bottom:14px"><label class="field">Write a review</label><textarea class="input" rows="3" id="reviewText" placeholder="Share your experience with ${order.courier.name}...">Alex was super fast and professional. Package arrived in perfect condition!</textarea></div>
+    <div style="border:2px dashed var(--border);border-radius:12px;padding:16px;text-align:center;margin-bottom:14px;cursor:pointer" onclick="toast('📷 Photo attached!')"><div style="font-size:22px">📷</div><div style="font-size:11px;color:var(--text3)">Tap to attach photo (optional)</div></div>
+    <button class="btn-primary" onclick="submitRating()">Submit Review ⭐</button>
+  </div>`;
+}
+let starCount=5;
+function rateStars(n){starCount=n;document.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('active',i<n))}
+function toggleTag(el){el.classList.toggle('sel')}
+function submitRating(){
+  showModal(`<div style="text-align:center;padding:10px">`+`<div style="font-size:52px;animation:popIn .4s ease">💖</div><div class="h2" style="margin:8px 0">Thank You!</div><div style="font-size:14px;color:var(--gold);margin-bottom:6px">${'★'.repeat(starCount)}${'☆'.repeat(5-starCount)}</div><div class="sub" style="margin-bottom:16px">Your feedback helps ${order.courier.name} deliver better</div><button class="btn-ghost" onclick="closeModal();TAB='home';render()">Back to Home</button></div>`);
+}
+
+/* ─── PROFILE ─── */
+function profileScreen(){
+  return `
+  <div class="anim">
+    <div class="section-label">👤 Profile</div>
+    <div class="h2">My Account</div>
+    <div class="sub">Manage your deliveries and settings</div>
+    <div class="card" style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+      <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">W</div>
+      <div><div style="font-weight:900;font-size:16px">Winfa</div><div style="font-size:12px;color:var(--text3)">Member since 2025 · Gold</div></div>
+    </div>
+    ${[['📍','Saved Addresses','3 addresses stored'],['💳','Payment Methods','Card · Wallet · Cash'],['🎁','Rewards','1,240 points'],['🤖','AI Preferences','Instant pricing on']].map(x=>`<div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer" onclick="toast('${x[1]}')"><span style="font-size:20px">${x[0]}</span><div style="flex:1"><div style="font-weight:700;font-size:14px">${x[1]}</div><div style="font-size:11px;color:var(--text3)">${x[2]}</div></div><span style="color:var(--text3)">›</span></div>`).join('')}
+    <button class="btn-ghost" style="margin-top:10px" onclick="TAB='chat';render()">🤖 AI Customer Service</button>
+  </div>`;
+}
+
+/* ─── AI CHAT ─── */
+function chatScreen(){
+  return `
+  <div class="anim">
+    <div class="h2" style="margin-bottom:4px">🤖 AI Assistant</div>
+    <div class="sub" style="margin-bottom:14px;display:flex;align-items:center;gap:6px"><span style="color:var(--green)">●</span> Online 24/7 · avg response 0.8s</div>
+    <div class="chat">
+      <div class="chat-head"><span style="font-size:20px">🤖</span><div><div style="font-weight:800;font-size:13px">Kungfu AI Copilot</div><div style="font-size:10px;color:var(--green)">Natural language support</div></div></div>
+      <div class="chat-body" id="chatBody">
+        <div class="msg bot">Hi! I'm Kungfu Express AI Assistant. How can I help with your delivery? 👋</div>
+      </div>
+      <div class="chat-actions">
+        ${['📦 Track order','📍 Change address','💰 Billing','⚠️ Complaint','🔄 Refund'].map(q=>`<button class="qa-chip" onclick="chatAsk('${q}')">${q}</button>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+function bindChat(){setTimeout(()=>{const b=document.getElementById('chatBody');if(b)b.scrollTop=b.scrollHeight},50)}
+let chatQ=0;
+function chatAsk(q){
+  const b=document.getElementById('chatBody');
+  if(!b)return;
+  const label=q.replace('📦 ','' ).replace('📍 ','').replace('💰 ','').replace('⚠️ ','').replace('🔄 ','');
+  b.innerHTML+=`<div class="msg user">${q.replace(label,label)}</div>`;
+  b.scrollTop=b.scrollHeight;
+  setTimeout(()=>{
+    const replies={
+      '📦 Track order':`📦 Order <b>${order.id}</b><br>Status: <b style="color:var(--green)">${order.created?ORDER_STATUS_POINTS[order.status]:'No active order'}</b><br>Courier: ${order.created?order.courier.name+' ⭐'+order.courier.rating:'—'}<br>ETA: ${order.created?(order.status>=6?'Delivered':'~12 min'):'—'}<br>Tap "Track" in the nav for live map.`,
+      '📍 Change address':`📍 Would you like to change the delivery address?<br>• Fee may adjust by distance<br>• Courier rerouted automatically<br><br>Type your new address 👇`,
+      '💰 Billing':`💰 Order <b>${order.id}</b> receipt:<br>• Base: HK$${TYPES[order.type].base}<br>• Distance: HK$${costDist()}<br>• AI discount: -HK$5<br><b>Total paid: HK$${order.fare||58}</b>`,
+      '⚠️ Complaint':`⚠️ I'm sorry to hear that. Please describe the issue and I'll escalate it with priority. A resolution specialist will follow up within 2 hours.`,
+      '🔄 Refund':`🔄 To start a refund:<br>• Eligible? <b style="color:var(--green)">Yes</b><br>• Estimated refund: HK$${order.fare||58}<br>• Processing: 1-2 business days<br><br>Confirm to auto-apply: <button class="btn-green" style="padding:6px 14px;font-size:12px;margin-top:6px" onclick="chatAskConfirm()">Confirm Refund</button>`
+    };
+    b.innerHTML+=`<div class="msg bot">${replies[q]||'Sure! Let me help with that.'}</div>`;
+    b.scrollTop=b.scrollHeight;
+  },600);
+}
+function chatAskConfirm(){const b=document.getElementById('chatBody');b.innerHTML+=`<div class="msg bot">✅ Refund of <b>HK$${order.fare||58}</b> submitted to the original payment method. You'll receive a confirmation email shortly.</div>`;b.scrollTop=b.scrollHeight;toast('🔄 Refund auto-applied')}
+
+/* ─── COURIER JOBS ─── */
+function courierJobs(){
+  return `
+  <div class="anim">
+    <div class="h2" style="margin-bottom:4px">📬 Available Jobs</div>
+    <div class="sub">Live orders near you · sorted by AI priority</div>
+    <div class="card" style="border:2px solid var(--green);margin-bottom:12px" onclick="courierAccept()">
+      <div class="flex-between" style="margin-bottom:8px"><b>📦 ${order.id}</b><span class="tag" style="background:rgba(0,200,83,.15);color:var(--green)">● New</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">📍 ${order.pickup}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">🏁 ${order.delivery}</div>
+      <div class="mini-chips"><span class="chip">💰 HK$${order.fare}</span><span class="chip">🚗 4.2 km</span><span class="chip">⏱️ 21 min</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);text-align:center;margin:10px 0">More incoming...</div>
+    <div style="background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--border)">
+      <div class="h3">📈 AI Insights</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7">Morning CBD zone is 30% more profitable. Consider staying near Central to maximize earnings.</div>
+    </div>
+  </div>`;
+}
+
+/* ─── EARNINGS ─── */
+function earningsScreen(){
+  const e=state.earnings;
+  compare();
+  return `
+  <div class="anim">
+    <div class="flex-between" style="margin-bottom:12px"><div><div class="h2">Earnings</div><div class="sub">Good morning, ${order.courier.name} 👋</div></div></div>
+    <div class="earn-hero"><div class="earn-amt">HK$${e.today.toLocaleString()}</div><div style="font-size:11px;color:var(--text2);margin-top:4px">Today's Earnings</div></div>
+    <div class="earn-grid">
+      <div class="earn-card"><div style="font-size:20px;font-weight:900;color:var(--green)">HK$${e.today}</div><div style="font-size:10px;color:var(--text3)">Today</div></div>
+      <div class="earn-card"><div style="font-size:20px;font-weight:900;color:var(--blue)">HK$${e.week}</div><div style="font-size:10px;color:var(--text3)">This Week</div></div>
+      <div class="earn-card"><div style="font-size:20px;font-weight:900;color:var(--accent)">HK$${(e.week*4).toFixed(0)}</div><div style="font-size:10px;color:var(--text3)">This Month</div></div>
+      <div class="earn-card"><div style="font-size:20px;font-weight:900;color:var(--gold)">${e.accRate}%</div><div style="font-size:10px;color:var(--text3)">Accept Rate</div></div>
+      <div class="earn-card"><div style="font-size:20px;font-weight:900">${e.orders}</div><div style="font-size:10px;color:var(--text3)">Orders Today</div></div>
+      <div class="earn-card"><div style="font-size:20px;font-weight:900;color:var(--purple)">HK$120</div><div style="font-size:10px;color:var(--text3)">Bonuses</div></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="h3">📊 Weekly Trend</div>
+      <div class="bars">${[62,80,45,90,70,55,95].map((h,i)=>`<div class="col"><div class="bar" style="height:${h}%"></div><div class="bar-lb">${'MTWTFSS'[i]}</div></div>`).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="h3">🎁 Bonus Progress</div>
+      <div class="flex-between" style="font-size:12px;margin-bottom:4px"><span>Weekly target: ${e.targetMax} orders</span><span style="color:var(--green)">${e.ordersTarget}/${e.targetMax}</span></div>
+      <div class="prog"><div class="fill" style="width:${(e.ordersTarget/e.targetMax)*100}%;background:linear-gradient(90deg,var(--gold),var(--accent))"></div></div>
+      <div style="font-size:11px;color:var(--gold);margin-top:8px">🔥 ${e.targetMax-e.ordersTarget} more orders for HK$500 bonus!</div>
+      <button class="btn-ghost" style="margin-top:12px" onclick="boostEarnings()">⚡ Quick Boost (simulate)</button>
+    </div>
+  </div>`;
+}
+function boostEarnings(){state.earnings.today+=Math.floor(Math.random()*90+40);toast('⚡ +HK$'+(40)+' from a high-value order!');render()}
+function compare(){}
+
+/* ─── ADMIN DASHBOARD ─── */
+function adminDash(){
+  const s=state;
+  return `
+  <div class="anim">
+    <div class="flex-between" style="margin-bottom:12px"><div><div class="h2">Control Center</div><div class="sub">Kungfu Express · Live ops</div></div><span class="tag" style="background:rgba(0,200,83,.15);color:var(--green)">● Live</span></div>
+    <div class="dash-grid">
+      <div class="dash"><div class="dv" style="color:var(--primary)">${s.adminOrders}</div><div class="dl">Today's Orders</div><div class="dc up">↑ 12%</div></div>
+      <div class="dash"><div class="dv" style="color:var(--blue)">${s.adminCouriers}</div><div class="dl">Active Couriers</div><div class="dc up">↑ 8%</div></div>
+      <div class="dash"><div class="dv" style="color:var(--green)">HK$${(s.adminRev/1000).toFixed(1)}K</div><div class="dl">Revenue</div><div class="dc up">↑ 15%</div></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="h3">🤖 AI Efficiency</div>
+      ${[['Route Optimization',94,'var(--green)'],['Match Accuracy',97,'var(--blue)'],['ETA Precision',91,'var(--cyan)'],['Cost Reduction',23,'var(--accent)']].map(x=>`<div class="stat-row"><span>${x[0]}</span><span style="color:${x[2]}">${x[1]}%</span></div><div class="prog" style="margin:4px 0 10px"><div class="fill" style="width:${x[1]}%;background:${x[2]}"></div></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="h3">🗺️ Delivery Hot Zones</div>
+      <div class="heat">
+        ${[[30,20,34,'var(--primary)'],[55,45,44,'var(--accent)'],[70,60,28,'var(--green)'],[20,65,24,'var(--blue)'],[45,15,30,'var(--purple)']].map(h=>`<div class="heat-dot" style="top:${h[1]}%;left:${h[0]}%;width:${h[2]}px;height:${h[2]}px;background:${h[3]};opacity:.55"></div>`).join('')}
+      </div>
+      <div class="flex-between" style="font-size:10px;color:var(--text3)"><span>🔴 TST</span><span>🟠 Central</span><span>🟢 Mongkok</span><span>🔵 Wan Chai</span><span>🟣 Sha Tin</span></div>
+    </div>
+  </div>`;
+}
+
+/* ─── AI PREDICT ─── */
+function aiPredict(){
+  return `
+  <div class="anim">
+    <div class="section-label">🔮 AI Engine</div>
+    <div class="h2">Demand Prediction</div>
+    <div class="sub">Machine learning forecasts for peak optimization</div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="h3">⏰ Peak Hours — Today</div>
+      <div class="bars" style="height:70px">${[20,15,10,14,22,40,60,55,70,85,95,100,90,75,65,80,90].map(h=>`<div class="col"><div class="bar" style="height:${h}%;opacity:.85"></div></div>`).join('')}</div>
+      <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--text3);margin:4px 2px 8px"><span>6AM</span><span>12PM</span><span>6PM</span><span>12AM</span></div>
+      <div style="font-size:11px;color:var(--text2);background:var(--bg);border-radius:8px;padding:8px 10px">📈 Peaks: 12:00–14:00 & 18:00–20:00 — deploy +30% couriers</div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="h3">🛵 Courier Demand</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--primary)">320</div><div style="font-size:9px;color:var(--text3)">Needed (Peak)</div></div>
+        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--green)">245</div><div style="font-size:9px;color:var(--text3)">Online</div></div>
+        <div style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--accent)">75</div><div style="font-size:9px;color:var(--text3)">Shortage</div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="h3">🔥 Predicted Hot Zones</div>
+      ${[['Central','Very High','var(--primary)'],['Tsim Sha Tsui','High','var(--accent)'],['Mongkok','Medium','var(--gold)'],['Wan Chai','Medium','var(--blue)'],['Sha Tin','Low','var(--green)']].map(z=>`<div class="flex-between" style="padding:9px 4px;border-bottom:1px solid var(--border)"><span style="font-size:12.5px">${z[0]}</span><span style="font-size:12px;font-weight:700;color:${z[2]}">${z[1]}</span></div>`).join('')}
+    </div>
+    <div class="card" style="background:linear-gradient(135deg,rgba(230,57,70,.1),rgba(255,107,53,.1))">
+      <div class="h3">🎯 Business Impact</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+        <div><div style="font-size:26px;font-weight:900;color:var(--green)">↓34%</div><div style="font-size:10px;color:var(--text2)">Empty Runs</div></div>
+        <div><div style="font-size:26px;font-weight:900;color:var(--blue)">↑28%</div><div style="font-size:10px;color:var(--text2)">Accept Rate</div></div>
+        <div><div style="font-size:26px;font-weight:900;color:var(--gold)">↑41%</div><div style="font-size:10px;color:var(--text2)">Profit</div></div>
+      </div>
+    </div>
+    <button class="btn-ghost" style="margin-top:14px" onclick="toast('🔮 AI model retrained on latest 100K orders')">🔄 Retrain Model</button>
+  </div>`;
+}
+
+/* ─── OPS / COVERAGE ─── */
+function opsScreen(){
+  return `
+  <div class="anim">
+    <div class="h2" style="margin-bottom:4px">🗺️ City Coverage</div>
+    <div class="sub">Fleet distribution & zone demand</div>
+    <div class="map" style="height:220px">
+      <div class="map-grid"></div>
+      ${[[20,30,'33,150,243'],[40,60,'230,57,70'],[60,25,'255,107,53'],[75,55,'0,200,83'],[30,75,'156,39,176'],[55,75,'0,188,212']].map(p=>`<div class="map-dot" style="top:${p[1]}%;left:${p[0]}%;background:rgb(${p[2]})"></div>`).join('')}
+      <div class="move-dot" style="top:70%;left:20%">📍</div>
+    </div>
+    <div class="card">
+      <div class="h3">Fleet by Zone</div>
+      <div class="stat-row"><span>🏙️ Central</span><span style="color:var(--primary)">212 couriers</span></div>
+      <div class="stat-row"><span>🌃 Tsim Sha Tsui</span><span style="color:var(--accent)">186 couriers</span></div>
+      <div class="stat-row"><span>🏮 Mongkok</span><span style="color:var(--gold)">154 couriers</span></div>
+      <div class="stat-row"><span>🏡 Sha Tin</span><span style="color:var(--green)">98 couriers</span></div>
+    </div>
+  </div>`;
+}
+
+/* ─── HELP / MODAL / TOAST ─── */
+function showHelp(){
+  showModal(`
+    <div style="text-align:center;padding:6px 0">
+      <div style="font-size:44px;margin-bottom:10px">🥋</div>
+      <div class="h2" style="margin-bottom:6px">Kungfu Express</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:18px">AI-Powered Smart Delivery Platform</div>
+      <div style="text-align:left;font-size:12.5px;color:var(--text2);line-height:1.8;margin-bottom:18px">
+        <b style="color:var(--text)">Try this live demo:</b><br>
+        1️⃣ Switch to <b>Customer</b> → <b>Order</b><br>
+        2️⃣ Fill addresses & create order<br>
+        3️⃣ Watch AI analysis → courier match<br>
+        4️⃣ Auto-advance to <b>Courier</b> view<br>
+        5️⃣ Accept order → follow live tracking<br>
+        6️⃣ Sign & rate → see <b>Admin</b> dashboard
+      </div>
+      <button class="btn-ghost" onclick="closeModal();TAB='new';ROLE='customer';renderRoleUI();render()">🚀 Start Creating an Order</button>
+    </div>`);
+}
+function renderRoleUI(){document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role===ROLE))}
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function showModal(html){
+  document.getElementById('modalBox').innerHTML=`<button class="modal-close" onclick="closeModal()">✕</button>`+html;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal()});
+
+/* ═══════════════════ INIT ═══════════════════ */
+function init(){
+  setRole('customer');
+  TAB='home';
+  render();
+  // PWA
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+  let deferred;
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;showInstallBanner(deferred)});
+}
+function showInstallBanner(deferred){
+  let b=document.createElement('div');
+  b.style.cssText='position:fixed;bottom:90px;left:16px;right:16px;z-index:3000;max-width:400px;margin:0 auto;background:#1a1a28;border:1px solid #e63946;border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.6);animation:fadeUp .4s ease';
+  b.innerHTML='<div style="font-size:26px">🥋</div><div style="flex:1"><div style="font-size:13px;font-weight:700">Install Kungfu Express</div><div style="font-size:11px;color:#8888aa">Add to home screen & open like an app</div></div><button id="ib" style="padding:8px 14px;border-radius:8px;background:linear-gradient(135deg,#e63946,#ff6b35);border:none;color:#fff;font-weight:700;font-size:12px">Install</button>';
+  document.body.appendChild(b);
+  document.getElementById('ib').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice}b.remove()};
+}
+init();
+
+// role screens switcher: map TAB names to render functions
+const roleScreens={customer:{sign:signScreen,rating:ratingScreen,chat:chatScreen},courier:{},admin:{}};
+// patch render to handle sign/rating/chat for customer
+const origRender=render;
+// override nav map to include customer-only deep screens handled by TAB
 </script>
 </body>
 </html>
